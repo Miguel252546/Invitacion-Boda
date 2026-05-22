@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invitación de Boda - Yda & Emi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- ══ POKÉBALL OPENING ══ -->
+    <div class="poke-opening" id="pokeOpening">
+        <div class="poke-flash" id="pokeFlash"></div>
+        <div class="poke-light-lines" id="pokeLightLines">
+            <div class="poke-light-line"></div>
+            <div class="poke-light-line"></div>
+            <div class="poke-light-line"></div>
+        </div>
+        <canvas id="pokeSky"></canvas>
+        <canvas id="pokeHearts"></canvas>
+        <div class="poke-bg-layer" id="pokeBgLayer"></div>
+        
+        <div class="poke-scene">
+            <div class="poke-card">
+                <div class="poke-eyebrow">Toca la Poke Ball</div>
+                <div class="poke-rule"></div>
+                
+                <div class="poke-stage" id="pokeStage">
+                    <div class="poke-halo"></div>
+                    
+                    <!-- Anillo -->
+                    <div class="poke-ring-wrap" id="pokeRing">
+                        <div class="poke-ring-float">
+                            <svg width="148" height="172" viewBox="0 0 148 172" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="gBandP" x1="0" y1="0" x2="1" y2="0">
+                                        <stop offset="0%" stop-color="#3e2406"/>
+                                        <stop offset="50%" stop-color="#ecd050"/>
+                                        <stop offset="100%" stop-color="#3e2406"/>
+                                    </linearGradient>
+                                    <linearGradient id="gDTP" x1=".3" y1="0" x2=".7" y2="1">
+                                        <stop offset="0%" stop-color="#ffffff"/>
+                                        <stop offset="100%" stop-color="#88c0e0"/>
+                                    </linearGradient>
+                                    <filter id="fGP" x="-55%" y="-55%" width="210%" height="210%">
+                                        <feGaussianBlur stdDeviation="2.8" result="b"/>
+                                        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+                                    </filter>
+                                    <clipPath id="cLP"><rect x="0" y="84" width="148" height="88"/></clipPath>
+                                </defs>
+                                <ellipse cx="74" cy="165" rx="32" ry="7" fill="rgba(0,0,0,.28)" filter="url(#fGP)"/>
+                                <circle cx="74" cy="112" r="38" stroke="#2e1804" stroke-width="15" fill="none"/>
+                                <circle cx="74" cy="112" r="38" stroke="url(#gBandP)" stroke-width="15" fill="none" clip-path="url(#cLP)"/>
+                                <rect x="56" y="70" width="36" height="11" rx="3.5" fill="#9c6c0c" filter="url(#fGP)"/>
+                                <path d="M60 70 Q57 56 54 42" stroke="#c88c18" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+                                <path d="M74 68 Q74 54 74 39" stroke="#dcac20" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+                                <path d="M88 70 Q91 56 94 42" stroke="#c88c18" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+                                <polygon points="74,86 56,70 92,70" fill="#2464a4" filter="url(#fGP)" opacity=".82"/>
+                                <polygon points="74,86 56,70 49,46 74,37" fill="#b4e2ff"/>
+                                <polygon points="74,86 92,70 99,46 74,37" fill="#e2f5ff"/>
+                                <polygon points="74,37 49,46 59,59 89,59 99,46" fill="url(#gDTP)" filter="url(#fGP)"/>
+                                <ellipse cx="66" cy="47" rx="7" ry="4" fill="rgba(255,255,255,.75)" transform="rotate(-22,66,47)" filter="url(#fGP)"/>
+                            </svg>
+                        </div>
+                    </div>
+                    
+                    <!-- Pokéball -->
+                    <div class="poke-ball-wrap" id="pokeBallWrap" onclick="openPokeBall()">
+                        <div class="poke-e-ring"></div>
+                        <div class="poke-e-ring"></div>
+                        <div class="poke-e-ring"></div>
+                        <div class="poke-ball">
+                            <div class="poke-half poke-h-top">
+                                <div class="poke-fill"></div>
+                            </div>
+                            <div class="poke-band"></div>
+                            <div class="poke-btn"></div>
+                            <div class="poke-half poke-h-bot">
+                                <div class="poke-fill"></div>
+                            </div>
+                        </div>
+                        <div class="poke-p-layer" id="pokePLayer"></div>
+                    </div>
+                </div>
+                
+                <div class="poke-proposal" id="pokeProposal">
+                    <div class="poke-p-question">Acompañanos En Este Inicio de Viaje</div>
+                    <div class="poke-p-sub"></div>
+                    <button class="poke-yes-btn" onclick="pokeSayYes()">Presiona Aca</button>
+                </div>
+                <div class="poke-hint" id="pokeHint"></div>
+            </div>
+        </div>
+        
+        <button class="poke-music-btn" id="pokeMusicBtn" data-tip="Música">
+            <svg class="poke-ico" viewBox="0 0 24 24">
+                <path d="M9 18V5l12-2v13" stroke-width="1.6" stroke="currentColor" fill="none" stroke-linecap="round"/>
+                <circle cx="6" cy="18" r="3" fill="currentColor"/>
+                <circle cx="18" cy="16" r="3" fill="currentColor"/>
+            </svg>
+            <div class="poke-waves">
+                <div class="poke-wb"></div>
+                <div class="poke-wb"></div>
+                <div class="poke-wb"></div>
+                <div class="poke-wb"></div>
+                <div class="poke-wb"></div>
+            </div>
+        </button>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="./Video + musica/Micorazon.mp3" type="audio/mpeg">
+    </audio>
+
+    <main class="main-content" id="mainContent">
+        <!-- Hero Section -->
+        <section class="hero" id="hero">
+            <div class="hero-bg">
+                <div class="hero-overlay"></div>
+                <div class="hero-image"></div>
+                <div class="hero-particles" id="heroParticles"></div>
+                <div class="hero-rays">
+                    <div class="ray"></div>
+                    <div class="ray"></div>
+                    <div class="ray"></div>
+                </div>
+            </div>
+            <div class="hero-content">
+                <p class="hero-subtitle">Estamos preparando todo para recibirte</p>
+                <div class="hero-names">
+                    <span class="name">Yda</span>
+                    <span class="amp">&</span>
+                    <span class="name">Emi</span>
+                </div>
+                <div class="hero-date-row">
+                    <span class="line"></span>
+                    <span class="date">15 de Mayo, 2027</span>
+                    <span class="line"></span>
+                </div>
+                <div class="hero-location">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Salón Bolgheri</span>
+                </div>
+                <a href="#rsvp" class="hero-btn">
+                    <span>Ver Invitación</span>
+                    <i class="fas fa-chevron-down"></i>
+                </a>
+            </div>
+            <div class="scroll-hint">
+                <div class="scroll-line"></div>
+            </div>
+        </section>
+
+        <!-- Opening -->
+        <section class="section opening" id="opening">
+            <div class="section-particles" id="openingParticles"></div>
+            <div class="container">
+                <div class="opening-inner">
+                    <div class="deco-line">
+                        <span></span>
+                        <i class="fas fa-heart"></i>
+                        <span></span>
+                    </div>
+                    <p class="opening-text">
+                        Con el corazón lleno de alegría y la emoción de compartir este momento único,<br>
+                        te invitamos a ser parte de nuestra historia de amor.
+                    </p>
+                    <div class="names-line">
+                        <span>Yda</span>
+                        <span class="and">&</span>
+                        <span>Emi</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Countdown -->
+        <section class="section countdown" id="countdown">
+            <div class="countdown-particles" id="countdownParticles"></div>
+            <div class="container">
+                <h2 class="section-title light">Falta poco para el gran día</h2>
+                <div class="countdown-grid">
+                    <div class="count-box">
+                        <div class="count-glow"></div>
+                        <span class="count-num" id="days">00</span>
+                        <span class="count-label">Días</span>
+                    </div>
+                    <span class="count-sep">:</span>
+                    <div class="count-box">
+                        <div class="count-glow"></div>
+                        <span class="count-num" id="hours">00</span>
+                        <span class="count-label">Horas</span>
+                    </div>
+                    <span class="count-sep">:</span>
+                    <div class="count-box">
+                        <div class="count-glow"></div>
+                        <span class="count-num" id="minutes">00</span>
+                        <span class="count-label">Minutos</span>
+                    </div>
+                    <span class="count-sep">:</span>
+                    <div class="count-box">
+                        <div class="count-glow"></div>
+                        <span class="count-num" id="seconds">00</span>
+                        <span class="count-label">Segundos</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery -->
+        <section class="section gallery" id="gallery">
+            <div class="container">
+                <h2 class="section-title light">Nuestros momentos</h2>
+                <div class="gallery-grid">
+                    <div class="gallery-item big">
+                        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80" alt="Foto de pareja 1">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1529636798458-92182e662485?w=600&q=80" alt="Foto de pareja 2">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=600&q=80" alt="Foto de pareja 3">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&q=80" alt="Foto de pareja 4">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=600&q=80" alt="Foto de pareja 5">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                    </div>
+                    <div class="gallery-item big">
+                        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=800&q=80" alt="Foto de pareja 6">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-expand"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Video -->
+        <section id="video" class="video section-padding">
+            <div class="section-background"></div>
+            <div class="container">
+                <h2 class="section-title reveal-fade">Nuestro Video</h2>
+                <div class="video-wrapper reveal-scale">
+                    <!-- Overlay con botón play -->
+                    <div class="video-overlay" id="videoOverlay">
+                        <div class="video-play-btn">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <p>Reproducir Video</p>
+                    </div>
+                    <!-- Video (se cargará al hacer click) -->
+                    <video id="bgVideo" controls playsinline crossorigin="anonymous" preload="metadata">
+                        <source src="./Video + musica/DRAGON BALL GT   Mi Corazón Encantado instrumental.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </section>
+
+        <!-- Details -->
+        <section id="detalles" class="detalles">
+            <div class="section-background"></div>
+            <div class="container">
+                <h2 class="section-title reveal-fade">Detalles del Evento</h2>
+
+                <div class="detalles-grid">
+                    <div class="detalle-card reveal-fade" data-delay="0">
+                        <div class="detalle-icon">
+                            <i class="far fa-calendar"></i>
+                        </div>
+                        <h3>Fecha del Evento</h3>
+                        <p>15 de Mayo de 2027</p>
+                    </div>
+
+                    <div class="detalle-card reveal-fade" data-delay="100">
+                        <div class="detalle-icon">
+                            <i class="far fa-clock"></i>
+                        </div>
+                        <h3>Hora del Evento</h3>
+                        <p>18:00 horas</p>
+                    </div>
+
+                    <div class="detalle-card reveal-fade" data-delay="200">
+                        <div class="detalle-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h3>Lugar del Evento</h3>
+                        <p>Salón Bolgheri</p>
+                        <p class="direccion">Santiago Derqui 703, X5105 Villa Allende, Córdoba</p>
+                        <a href="https://maps.google.com/?q=Salón+Bolgheri+Córdoba" target="_blank" class="detalle-btn">
+                            <i class="fas fa-external-link-alt"></i>
+                            Ver en Google Maps
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Vestimenta -->
+        <section id="vestimenta" class="vestimenta">
+            <div class="container">
+                <h2 class="section-title">Vestimenta</h2>
+                <p class="vestimenta-intro">Queridos invitados, les compartimos algunas indicaciones para que lucan espectaculares en nuestro gran día.</p>
+                <div class="vestimenta-grid">
+                    <div class="vestimenta-card">
+                        <div class="vestimenta-icon">
+                            <i class="fas fa-female"></i>
+                        </div>
+                        <h3>La Novia</h3>
+                        <p>Vestido de la novia, tiene reservado el blanco</p>
+                    </div>
+                    <div class="vestimenta-card">
+                        <div class="vestimenta-icon">
+                            <i class="fas fa-ring"></i>
+                        </div>
+                        <h3>Damas de Honor</h3>
+                        <p>Vestido largos, tienen reservados el azul</p>
+                    </div>
+                    <div class="vestimenta-card">
+                        <div class="vestimenta-icon">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <h3>Caballeros</h3>
+                        <p>Traje oscuro (gris o azul marino)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Regalos -->
+        <section id="regalos" class="section regalos">
+            <div class="container">
+                <h2 class="section-title light">Mesa de Regalos</h2>
+                <div class="regalo-card">
+                    <div class="regalo-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <p class="regalo-texto">Tu presencia es el mejor regalo. Pero si deseas colaborarnos, aquí encontrarás toda la información.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- RSVP -->
+        <section class="section rsvp" id="rsvp">
+            <div class="rsvp-particles" id="rsvpParticles"></div>
+            <div class="container">
+                <div class="rsvp-box">
+                    <div class="rsvp-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h2 class="rsvp-question">¿Nos vas a acompañar?</h2>
+                    <p class="rsvp-text">Tu presencia será el mejor regalo. Pero si deseas obsequiarnos algo, nuestra honeymoon está esperando.</p>
+                    <a href="https://forms.google.com/rsvp-wedding" target="_blank" class="rsvp-btn">
+                        <span>Confirmar Asistencia</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-particles" id="footerParticles"></div>
+            <div class="footer-hearts">
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-heart"></i>
+            </div>
+            <p class="footer-names">Yda & Emi</p>
+            <p class="footer-date">15 de Mayo, 2027</p>
+            <p class="footer-tag">#YdaYEmi2027</p>
+        </footer>
+
+        <!-- Floating Buttons -->
+        <div class="float-btns">
+            <button class="float-btn music-btn" id="musicBtn">
+                <i class="fas fa-music" id="musicIcon"></i>
+                <div class="btn-wave"></div>
+            </button>
+            <div class="float-dropdown">
+                <button class="float-btn whatsapp-btn" id="whatsappBtn">
+                    <i class="fab fa-whatsapp"></i>
+                </button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <p class="dropdown-title">Contactar a:</p>
+                    <a href="https://wa.me/5493516177173?text=Hola%20Emi%2C%20quiero%20consultarte%20algo%20sobre%20la%20boda" target="_blank" class="dropdown-item">
+                        <i class="fas fa-female"></i>
+                        <span>Yda</span>
+                    </a>
+                    <a href="https://wa.me/5493571639188?text=Hola%20Yda%2C%20quiero%20consultarte%20algo%20sobre%20la%20boda" target="_blank" class="dropdown-item">
+                        <i class="fas fa-male"></i>
+                        <span>Emi</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose">
+            <i class="fas fa-times"></i>
+        </button>
+        <img class="lightbox-img" id="lightboxImg" src="" alt="">
+    </div>
+
+    <script>
+    /* ══ POKÉBALL OPENING ══ */
+    (function() {
+        const skyCanvas = document.getElementById('pokeSky');
+        const skyCtx = skyCanvas.getContext('2d');
+        const heartsCanvas = document.getElementById('pokeHearts');
+        const heartsCtx = heartsCanvas.getContext('2d');
+        
+        let skyW, skyH, stars = [];
+        let heartsW, heartsH, hearts = [];
+        
+        function resizeCanvases() {
+            skyW = skyCanvas.width = window.innerWidth;
+            skyH = skyCanvas.height = window.innerHeight;
+            heartsW = heartsCanvas.width = window.innerWidth;
+            heartsH = heartsCanvas.height = window.innerHeight;
+            
+            stars = [];
+            for (let i = 0; i < 150; i++) {
+                stars.push({
+                    x: Math.random() * skyW,
+                    y: Math.random() * skyH,
+                    r: Math.random() * 1.5 + 0.15,
+                    a: Math.random(),
+                    da: (Math.random() - 0.5) * 0.006,
+                    h: [350, 42, 210, 270][Math.floor(Math.random() * 4)]
+                });
+            }
+        }
+        
+        resizeCanvases();
+        window.addEventListener('resize', resizeCanvases);
+        
+        function drawSky() {
+            skyCtx.clearRect(0, 0, skyW, skyH);
+            
+            [[skyW * 0.35, skyH * 0.38, skyW * 0.52, 0.14, 290],
+             [skyW * 0.68, skyH * 0.58, skyW * 0.42, 0.10, 345],
+             [skyW * 0.5, skyH * 0.5, skyW * 0.3, 0.06, 42]].forEach(([x, y, r, a, h]) => {
+                const g = skyCtx.createRadialGradient(x, y, 0, x, y, r);
+                g.addColorStop(0, `hsla(${h}, 65%, 38%, ${a})`);
+                g.addColorStop(1, 'transparent');
+                skyCtx.fillStyle = g;
+                skyCtx.fillRect(0, 0, skyW, skyH);
+            });
+            
+            stars.forEach(s => {
+                s.a += s.da;
+                if (s.a > 1) { s.a = 1; s.da *= -1; }
+                if (s.a < 0) { s.a = 0; s.da *= -1; }
+                skyCtx.beginPath();
+                skyCtx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                skyCtx.fillStyle = `hsla(${s.h}, 72%, 90%, ${s.a})`;
+                skyCtx.fill();
+            });
+            
+            requestAnimationFrame(drawSky);
+        }
+        
+        function spawnHeart() {
+            if (hearts.length > 24) return;
+            const isHeart = Math.random() > 0.42;
+            hearts.push({
+                x: Math.random() * heartsW,
+                y: heartsH + 16,
+                sz: Math.random() * 11 + 4,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: -(Math.random() * 0.4 + 0.17),
+                rot: Math.random() * Math.PI * 2,
+                vr: (Math.random() - 0.5) * 0.014,
+                a: Math.random() * 0.27 + 0.06,
+                isHeart: isHeart,
+                hue: isHeart ? 336 + Math.random() * 20 : 34 + Math.random() * 18
+            });
+        }
+        
+        setInterval(spawnHeart, 360);
+        
+        function drawHearts() {
+            heartsCtx.clearRect(0, 0, heartsW, heartsH);
+            hearts = hearts.filter(p => p.y > -40);
+            
+            hearts.forEach(p => {
+                p.x += p.vx + Math.sin(Date.now() * 0.0007 + p.y * 0.01) * 0.26;
+                p.y += p.vy;
+                p.rot += p.vr;
+                
+                heartsCtx.save();
+                heartsCtx.globalAlpha = p.a;
+                
+                if (p.isHeart) {
+                    heartsCtx.fillStyle = `hsl(${p.hue}, 78%, 65%)`;
+                    heartsCtx.translate(p.x, p.y);
+                    heartsCtx.beginPath();
+                    heartsCtx.moveTo(0, -6);
+                    heartsCtx.bezierCurveTo(0, -10, -7, -10, -7, -4);
+                    heartsCtx.bezierCurveTo(-7, 0, 0, 5, 0, 9);
+                    heartsCtx.bezierCurveTo(0, 5, 7, 0, 7, -4);
+                    heartsCtx.bezierCurveTo(7, -10, 0, -10, 0, -6);
+                    heartsCtx.closePath();
+                    heartsCtx.fill();
+                } else {
+                    heartsCtx.translate(p.x, p.y);
+                    heartsCtx.rotate(p.rot);
+                    heartsCtx.fillStyle = `hsl(${p.hue}, 65%, 68%)`;
+                    heartsCtx.beginPath();
+                    heartsCtx.ellipse(0, 0, p.sz * 0.28, p.sz, 0.3, 0, Math.PI * 2);
+                    heartsCtx.fill();
+                }
+                
+                heartsCtx.restore();
+            });
+            
+            requestAnimationFrame(drawHearts);
+        }
+        
+        drawSky();
+        drawHearts();
+        
+        // Particles
+        const pLayer = document.getElementById('pokePLayer');
+        const pc = ['#c9a84c', '#f0d98a', '#d4607a', '#f0a0b4', '#fff', '#d6f0ff', '#ffe870'];
+        for (let i = 0; i < 30; i++) {
+            const p = document.createElement('div');
+            p.className = 'poke-p';
+            const angle = (i / 30) * 360;
+            const dist = 100 + Math.random() * 100;
+            const dur = 0.6 + Math.random() * 0.5;
+            const del = 0.25 + Math.random() * 0.4;
+            const size = 3 + Math.random() * 8;
+            p.style.cssText = `--ppa:${angle}deg;--ppdist:${dist}px;--ppt:${dur}s;--ppd:${del}s;background:${pc[i % pc.length]};width:${size}px;height:${size}px;box-shadow:0 0 ${size + 2}px ${pc[i % pc.length]};`;
+            pLayer.appendChild(p);
+        }
+        
+        // Floating background objects - POKÉBOLAS VISIBLES
+        const bgLayer = document.getElementById('pokeBgLayer');
+        const ballTypes = [
+            ['#cc2010', '#111', '#f2ede8', '#cc2010'],
+            ['#1848c8', '#111', '#f2ede8', '#cc2010'],
+            ['#f0c800', '#111', '#f2ede8', '#1a1a1a'],
+            ['#9020c0', '#111', '#f2ede8', '#e040e0'],
+            ['#388020', '#111', '#d8c870', '#c89000'],
+            ['#e860a0', '#f0b0c0', '#f0f0f0', '#e860a0'],
+            ['#0098c0', '#0070a0', '#e8f0f8', '#0098c0'],
+            ['#78b020', '#a8c840', '#f0ece0', '#78b020'],
+        ];
+        
+        // Posiciones distribuidas por toda la pantalla
+        const ballPos = [
+            {l: '5%', t: '110%'}, {l: '85%', t: '110%'}, {l: '25%', t: '105%'}, {l: '65%', t: '108%'},
+            {l: '10%', t: '105%'}, {l: '90%', t: '105%'}, {l: '45%', t: '112%'}, {l: '55%', t: '110%'},
+            {l: '3%', t: '108%'}, {l: '95%', t: '112%'}, {l: '20%', t: '106%'}, {l: '75%', t: '109%'},
+            {l: '35%', t: '111%'}, {l: '60%', t: '107%'}, {l: '50%', t: '105%'}, {l: '15%', t: '110%'},
+            {l: '80%', t: '106%'}, {l: '40%', t: '108%'}, {l: '70%', t: '111%'}, {l: '30%', t: '109%'},
+        ];
+        
+        ballTypes.forEach((t, i) => {
+            if (ballPos[i]) {
+                const p = ballPos[i];
+                const sz = 35 + Math.random() * 30;
+                const div = document.createElement('div');
+                div.className = 'poke-bg-obj';
+                const dur = 18 + Math.random() * 22;
+                const del = Math.random() * 30;
+                const rot = (Math.random() - 0.5) * 300;
+                const ty = -(180 + Math.random() * 100);
+                const alp = 0.15 + Math.random() * 0.12;
+                div.style.cssText = `left:${p.l};top:${p.t};width:${sz}px;height:${sz}px;--pbd:${dur}s;--pbdel:${del}s;--pbr:${rot}deg;--pbty:${ty}px;--pba:${alp};`;
+                div.innerHTML = `<svg width="${sz}" height="${sz}" viewBox="0 0 40 40">
+                    <circle cx="20" cy="20" r="19" fill="${t[0]}" stroke="rgba(0,0,0,0.4)" stroke-width="1.5"/>
+                    <rect x="1" y="18" width="38" height="4" fill="${t[1]}"/>
+                    <circle cx="20" cy="20" r="6" fill="${t[3]}" stroke="${t[1]}" stroke-width="2"/>
+                    <circle cx="20" cy="20" r="3.5" fill="rgba(255,255,255,0.4)"/>
+                </svg>`;
+                bgLayer.appendChild(div);
+            }
+        });
+    })();
+    
+    // Open ball
+    let pokeOpened = false;
+    function openPokeBall() {
+        if (pokeOpened) return;
+        pokeOpened = true;
+        document.getElementById('pokeHint').style.opacity = '0';
+        document.getElementById('pokeStage').classList.add('opened');
+        document.getElementById('pokeBallWrap').classList.add('opened');
+        setTimeout(() => document.getElementById('pokeRing').classList.add('show'), 550);
+        setTimeout(() => document.getElementById('pokeProposal').classList.add('show'), 2000);
+    }
+    
+    // Say yes
+    function pokeSayYes() {
+        const opening = document.getElementById('pokeOpening');
+        const flash = document.getElementById('pokeFlash');
+        const lightLines = document.getElementById('pokeLightLines');
+
+        // Trigger light lines animation
+        lightLines.classList.add('active');
+
+        // Trigger flash animation
+        flash.classList.add('go');
+
+        // Hide opening during flash
+        opening.style.transition = 'opacity 0.3s ease';
+        opening.style.opacity = '0';
+
+        setTimeout(() => {
+            flash.classList.remove('go');
+            opening.style.display = 'none';
+            lightLines.classList.remove('active');
+
+            // Trigger hero animation entrance
+            document.querySelector('.hero').classList.add('animate-in');
+
+            // Scroll to hero section smoothly
+            setTimeout(() => {
+                document.getElementById('hero').scrollIntoView({ behavior: 'smooth' });
+            }, 300);
+        }, 1200);
+    }
+    
+    // Music toggle
+    (function() {
+        const audio = document.getElementById('bgMusic');
+        const btn = document.getElementById('pokeMusicBtn');
+        let playing = false;
+        
+        audio.volume = 0.35;
+        
+        function play() {
+            audio.play().then(() => {
+                playing = true;
+                btn.classList.add('playing');
+                btn.setAttribute('data-tip', 'Pausar');
+            }).catch(() => {});
+        }
+        
+        function pause() {
+            audio.pause();
+            playing = false;
+            btn.classList.remove('playing');
+            btn.setAttribute('data-tip', 'Música');
+        }
+        
+        window.addEventListener('load', () => { play(); });
+        document.addEventListener('click', () => { if (!playing) play(); }, { once: true });
+        
+        btn.addEventListener('click', e => {
+            e.stopPropagation();
+            playing ? pause() : play();
+        });
+        
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) pause();
+            else if (!playing) play();
+        });
+    })();
+</script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
