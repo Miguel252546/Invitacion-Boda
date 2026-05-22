@@ -47,6 +47,16 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(135, 206, 235, 0.07) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: -1;
+    mix-blend-mode: screen;
+}
+
 ::selection {
     background: var(--sky-main);
     color: #fff;
@@ -871,6 +881,7 @@ body {
     text-shadow: 0 0 20px rgba(135, 206, 235, 0.3);
     width: 100%;
     text-align: center;
+    font-variant-numeric: tabular-nums;
 }
 
 .count-label {
@@ -894,39 +905,24 @@ body {
 
 @media (max-width: 600px) {
     .countdown-grid {
-        gap: 6px;
-    }
-    .count-box {
-        width: 70px;
-        height: 90px;
-        padding: 12px 8px;
-    }
-    .count-num {
-        font-size: 1.6rem;
-    }
-    .count-label {
-        font-size: 0.55rem;
-    }
-    .count-sep {
-        font-size: 1.2rem;
-        min-height: 90px;
-    }
-}
-
-@media (max-width: 600px) {
-    .countdown-grid {
         gap: 12px;
     }
     .count-box {
-        min-width: 70px;
-        max-width: 80px;
-        padding: 20px 15px;
+        width: 75px;
+        min-width: 75px;
+        max-width: 75px;
+        height: 95px;
+        padding: 15px 5px;
     }
     .count-num {
         font-size: 1.8rem;
     }
+    .count-label {
+        font-size: 0.6rem;
+    }
     .count-sep {
         font-size: 1.5rem;
+        min-height: 95px;
     }
 }
 
@@ -1757,10 +1753,9 @@ body {
    VESTIMENTA
  =============================== */
 .vestimenta {
-    background: linear-gradient(180deg, var(--navy-light) 0%, var(--navy) 50%, var(--navy-light) 100%);
-    padding: 70px 0;
-    text-align: center;
     position: relative;
+    background: linear-gradient(180deg, var(--navy) 0%, #0d1525 100%);
+    padding: 80px 0;
 }
 
 .vestimenta::before {
@@ -1781,73 +1776,87 @@ body {
     color: #fff;
     font-family: var(--font-display);
     font-size: 2rem;
-    margin-bottom: 15px;
+    margin-bottom: 50px;
 }
 
 .vestimenta-intro {
     color: rgba(255,255,255,0.7);
     font-size: 1rem;
-    max-width: 500px;
+    max-width: 600px;
     margin: 0 auto 40px;
+    text-align: center;
 }
 
 .vestimenta-grid {
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 30px;
-    flex-wrap: wrap;
-    max-width: 900px;
+    max-width: 1100px;
     margin: 0 auto;
+    padding: 0 20px;
 }
 
 .vestimenta-card {
-    background: rgba(255,255,255,0.95);
+    background: #ffffff;
     border: 1px solid rgba(135, 206, 235, 0.3);
     border-radius: 16px;
-    padding: 30px 25px;
-    width: 250px;
-    transition: all 0.3s ease;
+    padding: 30px 20px;
+    text-align: center;
+    transition: all 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    min-height: 220px;
 }
 
 .vestimenta-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px);
     border-color: var(--sky-main);
-    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    box-shadow: 0 15px 40px rgba(135, 206, 235, 0.25);
 }
 
 .vestimenta-icon {
-    width: 55px;
-    height: 55px;
-    margin: 0 auto 15px;
-    background: linear-gradient(135deg, var(--sky-main), var(--sky-bright));
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 20px;
+    background: linear-gradient(135deg, var(--sky-main) 0%, var(--sky-bright) 100%);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
-    font-size: 1.3rem;
+    box-shadow: 0 6px 20px rgba(135, 206, 235, 0.35);
+    flex-shrink: 0;
 }
 
-.vestimenta-card h3 {
+.vestimenta-icon i {
+    font-size: 32px;
+    color: #ffffff;
+}
+
+.vestimenta-card h3, .vestimenta-title {
     color: var(--navy);
-    font-size: 1.1rem;
-    margin-bottom: 10px;
+    font-size: 20px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    margin-bottom: 12px;
 }
 
 .vestimenta-card p {
-    color: #555;
-    font-size: 0.9rem;
-    line-height: 1.5;
+    color: #1a2744;
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0 0 8px 0;
 }
 
 @media (max-width: 768px) {
     .vestimenta-grid {
-        flex-direction: column;
-        align-items: center;
+        grid-template-columns: 1fr;
+        gap: 20px;
     }
     .vestimenta-card {
-        width: 100%;
-        max-width: 300px;
+        padding: 30px 20px;
     }
 }
 
