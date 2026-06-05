@@ -313,7 +313,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 scrollTrigger: { trigger: '.detalles', start: 'top 80%' },
                 opacity: 0, y: 50, duration: 0.8, stagger: 0.2
             });
-            gsap.from('.regalo-card', {
+            gsap.from('.regalos .regalo-card', {
                 scrollTrigger: { trigger: '.regalos', start: 'top 80%', toggleActions: 'play none none reverse' },
                 opacity: 0, scale: 0.8, y: 50, duration: 1, ease: 'back.out(1.4)'
             });
@@ -345,6 +345,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 scrollTrigger: { trigger: '.footer', start: 'top 80%', toggleActions: 'play none none reverse' },
                 opacity: 0, y: 20, duration: 0.8, stagger: 0.15, delay: 0.5
             });
+
+            // Anuncios en el footer (entrada premium)
+            gsap.from('.ads-rail', {
+                scrollTrigger: { trigger: '.ads-rail', start: 'top 92%', toggleActions: 'play none none reverse' },
+                opacity: 0, x: 30, duration: 0.9, delay: 0.5, ease: 'power3.out'
+            });
+            gsap.from('.ads-card', {
+                scrollTrigger: { trigger: '.ads-rail', start: 'top 90%', toggleActions: 'play none none reverse' },
+                opacity: 0, y: 20, scale: 0.96, duration: 0.7, stagger: 0.15, delay: 0.7, ease: 'power3.out'
+            });
+
             gsap.from('.float-btns', {
                 opacity: 0, x: 100, duration: 1, delay: 0.5
             });
@@ -446,6 +457,81 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // =========================================================================
+    // ADVERTISING RAIL (lateral, refinada)
+    // Bloque compacto de publicidad a un costado del footer.
+    // Cada anuncio es una mini-tarjeta con thumbnail + texto.
+    // Para añadir/quitar anuncios, edita el array `ads`.
+    // Esquema: id, image (opcional), imageFallback, tag, title, url, target.
+    // =========================================================================
+    const AdsManager = {
+        // Catálogo de anuncios. Edita libremente este array.
+        // Si el array queda vacío, la sección se oculta automáticamente.
+        ads: [
+            {
+                id: 'sample-1',
+                image: '',
+                imageFallback: '♥',
+                tag: 'Oferta',
+                title: 'Ahorra más en tus compras',
+                url: '#',
+                target: '_blank'
+            },
+            {
+                id: 'sample-2',
+                image: '',
+                imageFallback: '✦',
+                tag: 'Recomendado',
+                title: 'Tu luna de miel',
+                url: '#',
+                target: '_blank'
+            }
+        ],
+
+        init() {
+            const section = document.getElementById('adsSection');
+            const list = document.getElementById('adsTrack');
+            if (!section || !list) return;
+
+            // Si no hay anuncios, ocultar la sección completa
+            if (!this.ads || this.ads.length === 0) {
+                section.style.display = 'none';
+                return;
+            }
+
+            this.renderCards(list);
+        },
+
+        renderCards(container) {
+            container.innerHTML = '';
+
+            this.ads.forEach((ad) => {
+                const card = document.createElement('a');
+                card.className = 'ads-card';
+                card.href = ad.url || '#';
+                card.target = ad.target || '_blank';
+                card.rel = card.target === '_blank' ? 'noopener noreferrer' : '';
+                card.setAttribute('aria-label', `${ad.title || 'Publicidad'}`);
+
+                const thumbHTML = ad.image
+                    ? `<img src="${ad.image}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+                       <span class="ads-thumb-fallback" style="display:none;">${ad.imageFallback || '★'}</span>`
+                    : `<span class="ads-thumb-fallback">${ad.imageFallback || '★'}</span>`;
+
+                card.innerHTML = `
+                    <div class="ads-thumb" aria-hidden="true">${thumbHTML}</div>
+                    <div class="ads-content">
+                        ${ad.tag ? `<span class="ads-tag">${ad.tag}</span>` : ''}
+                        <h3 class="ads-title">${ad.title || ''}</h3>
+                    </div>
+                    <i class="fas fa-chevron-right ads-arrow" aria-hidden="true"></i>
+                `;
+
+                container.appendChild(card);
+            });
+        }
+    };
+
+    // =========================================================================
     // APP CONTROLLER
     // Orchestrates the initialization of the entire application
     // =========================================================================
@@ -470,6 +556,7 @@ document.addEventListener('DOMContentLoaded', () => {
             CountdownManager.init();
             AnimationManager.init();
             UIEffects.init();
+            AdsManager.init();
             console.log('Wedding App: All modules initialized successfully.');
         }
     };

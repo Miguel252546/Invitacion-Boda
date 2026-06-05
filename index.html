@@ -346,6 +346,21 @@
             </div>
         </section>
 
+        <!-- Precio de la Tarjeta -->
+        <section id="precio-tarjeta" class="section precio-tarjeta">
+            <div class="container">
+                <h2 class="section-title light">Costo de la Tarjeta</h2>
+                <div class="regalo-card">
+                    <div class="regalo-icon">
+                        <i class="fas fa-ticket-alt"></i>
+                    </div>
+                    <p class="regalo-texto">
+                        Para ayudarnos con la organización de este gran día, el valor de la tarjeta por persona es de <strong>$[Monto]</strong>.
+                    </p>
+                </div>
+            </div>
+        </section>
+
         <!-- Regalos -->
         <section id="regalos" class="section regalos">
             <div class="container">
@@ -354,7 +369,14 @@
                     <div class="regalo-icon">
                         <i class="fas fa-gift"></i>
                     </div>
-                    <p class="regalo-texto">Tu presencia es el mejor regalo. Pero si deseas colaborarnos, aquí encontrarás toda la información.</p>
+                    <p class="regalo-texto">
+                        Lo más importante para nosotros es que puedas acompañarnos ese día, que bailemos hasta que los pies no den más y que celebremos el amor con todos los que queremos. Eso es lo que realmente nos llena el corazón. <br><br>
+                        Pero... seamos sinceros, ¡estos hoteles de luna de miel tienen unos precios que asustan! Y como no queremos que nuestra primera discusión de casados sea por el presupuesto del viaje, cualquier ayuda es más que bienvenida para nuestro fondo de 'Aventuras y Supervivencia Matrimonial'. ¡Te lo agradeceremos infinitamente!
+                    </p>
+                    <div class="regalo-datos" style="margin-top: 20px; font-family: var(--font-body); color: var(--navy); font-size: 1.1rem; text-align: center;">
+                        <p><strong>CBU:</strong> [Insertar CBU aquí]</p>
+                        <p><strong>Alias:</strong> [Insertar Alias aquí]</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -380,14 +402,30 @@
         <!-- Footer -->
         <footer class="footer">
             <div class="footer-particles" id="footerParticles"></div>
-            <div class="footer-hearts">
-                <i class="fas fa-heart"></i>
-                <i class="fas fa-heart"></i>
-                <i class="fas fa-heart"></i>
+
+            <div class="footer-layout">
+                <div class="footer-main">
+                    <div class="footer-hearts">
+                        <i class="fas fa-heart"></i>
+                        <i class="fas fa-heart"></i>
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <p class="footer-names">Yda & Emi</p>
+                    <p class="footer-date">15 de Mayo, 2027</p>
+                    <p class="footer-tag">#YdaYEmi2027</p>
+                </div>
+
+                <!-- ══ ADVERTISING (discreto, a un costado) ══ -->
+                <!-- Estructura preparada para múltiples anuncios.
+                     Edita el array `ads` en script.js para gestionar el contenido.
+                     Cada anuncio se renderiza como un enlace pequeño de texto. -->
+                <aside class="ads-rail" id="adsSection" aria-label="Publicidad">
+                    <span class="ads-rail-label">Publicidad</span>
+                    <div class="ads-rail-list" id="adsTrack">
+                        <!-- Los anuncios se inyectan dinámicamente desde script.js -->
+                    </div>
+                </aside>
             </div>
-            <p class="footer-names">Yda & Emi</p>
-            <p class="footer-date">15 de Mayo, 2027</p>
-            <p class="footer-tag">#YdaYEmi2027</p>
         </footer>
 
         <!-- Floating Buttons -->
