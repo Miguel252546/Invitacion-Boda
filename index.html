@@ -112,7 +112,7 @@
     </div>
 
     <audio id="bgMusic" loop>
-        <source src="./Video + musica/Micorazon.mp3" type="audio/mpeg">
+        <source src="./Video + musica/Ricchi E Poveri  Sara Perche Ti Amo (Testo _ Lyrics).m4a" type="audio/mpeg">
     </audio>
 
     <main class="main-content" id="mainContent">
@@ -389,8 +389,8 @@
                     <div class="rsvp-icon">
                         <i class="fas fa-heart"></i>
                     </div>
-                    <h2 class="rsvp-question">¿Nos vas a acompañar?</h2>
-                    <p class="rsvp-text">Tu presencia será el mejor regalo. Pero si deseas obsequiarnos algo, nuestra honeymoon está esperando.</p>
+                    <h2 class="rsvp-question">Acompañanos en este Dia</h2>
+                    <p class="rsvp-text">Tu presencia será el mejor regalo para nosotros.</p>
                     <a href="https://forms.google.com/rsvp-wedding" target="_blank" class="rsvp-btn">
                         <span>Confirmar Asistencia</span>
                         <i class="fas fa-arrow-right"></i>
@@ -400,31 +400,108 @@
         </section>
 
         <!-- Footer -->
-        <footer class="footer">
-            <div class="footer-particles" id="footerParticles"></div>
+        <footer class="site-footer" role="contentinfo" aria-labelledby="footer-title">
+            <h2 id="footer-title" class="sr-only">Información del sitio</h2>
 
-            <div class="footer-layout">
-                <div class="footer-main">
-                    <div class="footer-hearts">
-                        <i class="fas fa-heart"></i>
-                        <i class="fas fa-heart"></i>
-                        <i class="fas fa-heart"></i>
-                    </div>
-                    <p class="footer-names">Yda & Emi</p>
-                    <p class="footer-date">15 de Mayo, 2027</p>
-                    <p class="footer-tag">#YdaYEmi2027</p>
-                </div>
+            <div class="footer-container">
+                <!-- Columna 1: Contacto -->
+                <section class="footer-col footer-contact" aria-labelledby="footer-contact-title">
+                    <h3 id="footer-contact-title" class="footer-title">
+                        <i class="fa-solid fa-address-book" aria-hidden="true"></i>
+                        Contacto
+                    </h3>
 
-                <!-- ══ ADVERTISING (discreto, a un costado) ══ -->
-                <!-- Estructura preparada para múltiples anuncios.
-                     Edita el array `ads` en script.js para gestionar el contenido.
-                     Cada anuncio se renderiza como un enlace pequeño de texto. -->
-                <aside class="ads-rail" id="adsSection" aria-label="Publicidad">
-                    <span class="ads-rail-label">Publicidad</span>
-                    <div class="ads-rail-list" id="adsTrack">
-                        <!-- Los anuncios se inyectan dinámicamente desde script.js -->
-                    </div>
-                </aside>
+                    <address class="footer-address">
+                        <ul class="footer-list">
+                            <li class="footer-item">
+                                <a href="mailto:contacto@empresa.com" class="footer-link" aria-label="Enviar correo a contacto@empresa.com">
+                                    <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+                                    <span>contacto@empresa.com</span>
+                                </a>
+                            </li>
+                            <li class="footer-item">
+                                <a href="tel:+5491122334455" class="footer-link" aria-label="Llamar al +54 9 11 2233 4455">
+                                    <i class="fa-solid fa-phone" aria-hidden="true"></i>
+                                    <span>+54 9 11 2233 4455</span>
+                                </a>
+                            </li>
+                            <li class="footer-item">
+                                <a href="https://maps.google.com/?q=Av+Principal+123" target="_blank" rel="noopener" class="footer-link" aria-label="Abrir ubicación en Google Maps (se abre en una pestaña nueva)">
+                                    <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+                                    <span>Av. Principal 123, CABA, Argentina</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </address>
+                </section>
+
+                <!-- Columna 2: Enlaces rápidos -->
+                <nav class="footer-col footer-nav" aria-labelledby="footer-nav-title">
+                    <h3 id="footer-nav-title" class="footer-title">
+                        <i class="fa-solid fa-link" aria-hidden="true"></i>
+                        Enlaces rápidos
+                    </h3>
+                    <ul class="footer-list">
+                        <li class="footer-item">
+                            <a href="#inicio" class="footer-link">
+                                <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                                Inicio
+                            </a>
+                        </li>
+                        <li class="footer-item">
+                            <a href="#nosotros" class="footer-link">
+                                <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                                Nosotros
+                            </a>
+                        </li>
+                        <li class="footer-item">
+                            <a href="#servicios" class="footer-link">
+                                <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                                Servicios
+                            </a>
+                        </li>
+                        <li class="footer-item">
+                            <a href="#productos" class="footer-link">
+                                <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                                Productos
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <!-- Columna 3: Redes sociales -->
+                <section class="footer-col footer-social" aria-labelledby="footer-social-title">
+                    <h3 id="footer-social-title" class="footer-title">
+                        <i class="fa-solid fa-share-nodes" aria-hidden="true"></i>
+                        Redes sociales
+                    </h3>
+                    <ul class="footer-social-list" role="list">
+                        <li>
+                            <a href="https://facebook.com/" target="_blank" rel="noopener" class="social-link social-facebook" aria-label="Visitar Facebook (se abre en una pestaña nueva)">
+                                <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://instagram.com/" target="_blank" rel="noopener" class="social-link social-instagram" aria-label="Visitar Instagram (se abre en una pestaña nueva)">
+                                <i class="fa-brands fa-instagram" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://wa.me/5491122334455" target="_blank" rel="noopener" class="social-link social-whatsapp" aria-label="Contactar por WhatsApp (se abre en una pestaña nueva)">
+                                <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://tiktok.com/" target="_blank" rel="noopener" class="social-link social-tiktok" aria-label="Visitar TikTok (se abre en una pestaña nueva)">
+                                <i class="fa-brands fa-tiktok" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+
+            <div class="footer-bottom">
+                <p class="footer-copyright">2026 &copy; Todos los derechos reservados</p>
             </div>
         </footer>
 
