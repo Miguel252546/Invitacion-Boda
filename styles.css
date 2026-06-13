@@ -3339,6 +3339,103 @@ body::after {
 .social-whatsapp:focus-visible { background: #25d366; border-color: #25d366; }
 .social-tiktok:hover,
 .social-tiktok:focus-visible { background: #000000; border-color: var(--footer-accent); }
+.social-github:hover,
+.social-github:focus-visible { background: #24292e; border-color: #6e7681; }
+.social-linkedin:hover,
+.social-linkedin:focus-visible { background: #0a66c2; border-color: #0a66c2; }
+
+/* ── Grupos de redes sociales (Novia / Novio / Creador) ── */
+.footer-social-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.footer-social-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.footer-social-group {
+    flex: 1 1 50%;
+    min-width: 0;
+}
+
+.footer-social-dev {
+    flex: 1 1 100%;
+    align-items: center;
+    text-align: center;
+}
+
+.footer-social-dev .footer-social-list {
+    justify-content: center;
+}
+
+.footer-social-divider {
+    align-self: stretch;
+    width: 1px;
+    background: linear-gradient(180deg,
+        transparent 0%,
+        var(--footer-border) 30%,
+        var(--footer-border) 70%,
+        transparent 100%);
+    flex: 0 0 1px;
+}
+
+.footer-social-divider-h {
+    display: block;
+    height: 1px;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        var(--footer-border) 25%,
+        var(--footer-border) 75%,
+        transparent 100%);
+    margin: 4px 0;
+}
+
+.footer-social-name {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0 0 8px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--footer-text);
+    letter-spacing: 0.04em;
+}
+
+.footer-social-name i {
+    color: var(--footer-accent);
+    font-size: 0.85rem;
+}
+
+.footer-social-handle {
+    color: var(--footer-text-muted);
+    font-weight: 400;
+    font-size: 0.78rem;
+    margin-left: 2px;
+    opacity: 0.85;
+}
+
+/* ── Fila del Creador: iconos a la izquierda + avatar a la derecha ── */
+.footer-social-dev-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* ── Avatar del Creador (imagen decorativa, no interactiva) ── */
+.footer-creator-img {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--footer-border);
+    cursor: default;
+    display: block;
+    pointer-events: none;
+}
 
 .footer-bottom {
     max-width: 1100px;
@@ -3401,6 +3498,45 @@ body::after {
     }
 
     .footer-social-list {
+        justify-content: center;
+    }
+
+    .footer-social-row {
+        flex-direction: column;
+        align-items: center;
+        gap: 18px;
+    }
+
+    .footer-social-group {
+        flex: 1 1 100%;
+        align-items: center;
+        text-align: center;
+    }
+
+    .footer-social-name {
+        justify-content: center;
+    }
+
+    .footer-social-list {
+        justify-content: center;
+    }
+
+    .footer-social-divider {
+        width: 60%;
+        max-width: 220px;
+        height: 1px;
+        background: linear-gradient(90deg,
+            transparent 0%,
+            var(--footer-border) 50%,
+            transparent 100%);
+    }
+
+    .footer-social-dev {
+        text-align: center;
+    }
+
+    .footer-social-dev-row {
+        flex-wrap: wrap;
         justify-content: center;
     }
 }
