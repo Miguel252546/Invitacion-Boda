@@ -11,6 +11,13 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <!-- ══ FONDO MÁGICO: pétalos + bokeh dorado (detrás de todo) ══ -->
+    <div class="magic-bg" aria-hidden="true">
+        <div class="magic-petals" id="magicPetals"></div>
+        <div class="magic-bokeh" id="magicBokeh"></div>
+        <div class="magic-stars" id="magicStars"></div>
+    </div>
+
     <!-- ══ POKÉBALL OPENING ══ -->
     <div class="poke-opening" id="pokeOpening">
         <div class="poke-flash" id="pokeFlash"></div>
@@ -886,5 +893,91 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="script.js"></script>
+
+    <!-- ══ Magic background: inyecta pétalos + bokeh + estrellas ══ -->
+    <script>
+    (function() {
+        // Respeta accesibilidad: si el usuario prefiere menos movimiento, no generamos partículas
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            return;
+        }
+
+        // ── Pétalos flotando hacia abajo (rosa/dorado) ──
+        const petalsContainer = document.getElementById('magicPetals');
+        const petalCount = 14;
+        const petalColors = [
+            'rgba(244, 194, 194, 0.85)',  // rosa suave
+            'rgba(232, 184, 136, 0.80)',  // durazno
+            'rgba(212, 166, 77, 0.75)',   // dorado
+            'rgba(255, 245, 220, 0.85)'   // crema
+        ];
+        for (let i = 0; i < petalCount; i++) {
+            const p = document.createElement('div');
+            p.className = 'magic-petal';
+            const size = 8 + Math.random() * 8;          // 8–16px
+            const dur = 14 + Math.random() * 10;         // 14–24s (caída lenta)
+            const del = Math.random() * -20;             // delay negativo para que aparezcan escalonadas
+            const left = Math.random() * 100;            // posición horizontal aleatoria
+            const sway = (Math.random() * 80) - 40;      // oscilación lateral
+            const rot = (Math.random() * 360);
+            const color = petalColors[i % petalColors.length];
+            p.style.cssText = `
+                width:${size}px;height:${size}px;
+                left:${left}vw;
+                --p-dur:${dur}s;
+                --p-del:${del}s;
+                --p-sway:${sway}px;
+                --p-rot:${rot}deg;
+                background:${color};
+            `;
+            petalsContainer.appendChild(p);
+        }
+
+        // ── Bokeh dorado: puntos brillantes que suben y se desvanecen ──
+        const bokehContainer = document.getElementById('magicBokeh');
+        const bokehCount = 18;
+        for (let i = 0; i < bokehCount; i++) {
+            const b = document.createElement('div');
+            b.className = 'magic-bokeh-dot';
+            const size = 4 + Math.random() * 8;          // 4–12px
+            const dur = 10 + Math.random() * 8;          // 10–18s (subida lenta)
+            const del = Math.random() * -15;
+            const left = Math.random() * 100;
+            const goldHue = 42 + Math.random() * 14;     // rango dorado
+            const opacity = 0.35 + Math.random() * 0.4;
+            b.style.cssText = `
+                width:${size}px;height:${size}px;
+                left:${left}vw;
+                --b-dur:${dur}s;
+                --b-del:${del}s;
+                --b-hue:${goldHue};
+                --b-op:${opacity};
+            `;
+            bokehContainer.appendChild(b);
+        }
+
+        // ── Estrellitas titilando (coherencia con la Pokéball) ──
+        const starsContainer = document.getElementById('magicStars');
+        const starCount = 22;
+        for (let i = 0; i < starCount; i++) {
+            const s = document.createElement('div');
+            s.className = 'magic-star';
+            const size = 1 + Math.random() * 2.5;
+            const dur = 2 + Math.random() * 4;
+            const del = Math.random() * -6;
+            const top = Math.random() * 100;
+            const left = Math.random() * 100;
+            const hue = [200, 42, 340, 280][i % 4];      // azul, dorado, rosa, lavanda
+            s.style.cssText = `
+                width:${size}px;height:${size}px;
+                top:${top}vh;left:${left}vw;
+                --s-dur:${dur}s;
+                --s-del:${del}s;
+                --s-hue:${hue};
+            `;
+            starsContainer.appendChild(s);
+        }
+    })();
+    </script>
 </body>
 </html>

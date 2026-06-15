@@ -3555,3 +3555,129 @@ body::after {
         transform: none;
     }
 }
+
+/* ================================
+   MAGIC BACKGROUND
+   Pétalos + bokeh dorado + estrellas
+   Capa fija detrás de todo el contenido
+   ================================ */
+.magic-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.magic-petals,
+.magic-bokeh,
+.magic-stars {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+/* ── Pétalos: caen lentamente con oscilación lateral ── */
+.magic-petal {
+    position: absolute;
+    top: -20px;
+    border-radius: 65% 35% 60% 40% / 50% 60% 40% 50%;
+    filter: blur(0.3px);
+    opacity: 0;
+    animation: petalFall var(--p-dur, 18s) linear var(--p-del, 0s) infinite;
+    will-change: transform, opacity;
+    box-shadow: 0 0 6px rgba(255, 220, 200, 0.25);
+}
+
+@keyframes petalFall {
+    0% {
+        transform: translate3d(0, -10vh, 0) rotate(0deg);
+        opacity: 0;
+    }
+    8% {
+        opacity: 0.9;
+    }
+    50% {
+        transform: translate3d(var(--p-sway, 30px), 50vh, 0) rotate(180deg);
+    }
+    92% {
+        opacity: 0.9;
+    }
+    100% {
+        transform: translate3d(calc(var(--p-sway, 30px) * -0.4), 110vh, 0) rotate(var(--p-rot, 360deg));
+        opacity: 0;
+    }
+}
+
+/* ── Bokeh dorado: puntos brillantes que suben y se desvanecen ── */
+.magic-bokeh-dot {
+    position: absolute;
+    bottom: -20px;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+        hsla(var(--b-hue, 45), 80%, 75%, 1) 0%,
+        hsla(var(--b-hue, 45), 80%, 60%, 0.6) 40%,
+        transparent 75%);
+    filter: blur(1px);
+    opacity: 0;
+    animation: bokehRise var(--b-dur, 14s) ease-in-out var(--b-del, 0s) infinite;
+    will-change: transform, opacity;
+}
+
+@keyframes bokehRise {
+    0% {
+        transform: translate3d(0, 0, 0) scale(0.6);
+        opacity: 0;
+    }
+    15% {
+        opacity: var(--b-op, 0.6);
+    }
+    50% {
+        transform: translate3d(20px, -50vh, 0) scale(1.1);
+    }
+    85% {
+        opacity: var(--b-op, 0.6);
+    }
+    100% {
+        transform: translate3d(-10px, -110vh, 0) scale(0.4);
+        opacity: 0;
+    }
+}
+
+/* ── Estrellas: titilan suavemente en posiciones fijas ── */
+.magic-star {
+    position: absolute;
+    border-radius: 50%;
+    background: hsla(var(--s-hue, 42), 75%, 88%, 1);
+    box-shadow: 0 0 6px hsla(var(--s-hue, 42), 80%, 70%, 0.7);
+    animation: starTwinkle var(--s-dur, 3s) ease-in-out var(--s-del, 0s) infinite;
+    will-change: opacity, transform;
+}
+
+@keyframes starTwinkle {
+    0%, 100% {
+        opacity: 0.2;
+        transform: scale(0.85);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.25);
+    }
+}
+
+/* ── Accesibilidad: si el usuario prefiere menos movimiento ── */
+@media (prefers-reduced-motion: reduce) {
+    .magic-bg {
+        display: none;
+    }
+}
+
+/* ── Responsive: en móvil afinamos el efecto ── */
+@media (max-width: 600px) {
+    .magic-petal {
+        filter: blur(0.5px);
+    }
+    .magic-bokeh-dot {
+        filter: blur(1.5px);
+    }
+}
