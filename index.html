@@ -38,58 +38,62 @@
                 <div class="poke-stage" id="pokeStage">
                     <div class="poke-halo"></div>
                     
-                    <!-- Anillo -->
-                    <div class="poke-ring-wrap" id="pokeRing">
-                        <div class="poke-ring-float">
-                            <svg width="148" height="172" viewBox="0 0 148 172" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <defs>
-                                    <linearGradient id="gBandP" x1="0" y1="0" x2="1" y2="0">
-                                        <stop offset="0%" stop-color="#3e2406"/>
-                                        <stop offset="50%" stop-color="#ecd050"/>
-                                        <stop offset="100%" stop-color="#3e2406"/>
-                                    </linearGradient>
-                                    <linearGradient id="gDTP" x1=".3" y1="0" x2=".7" y2="1">
-                                        <stop offset="0%" stop-color="#ffffff"/>
-                                        <stop offset="100%" stop-color="#88c0e0"/>
-                                    </linearGradient>
-                                    <filter id="fGP" x="-55%" y="-55%" width="210%" height="210%">
-                                        <feGaussianBlur stdDeviation="2.8" result="b"/>
-                                        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-                                    </filter>
-                                    <clipPath id="cLP"><rect x="0" y="84" width="148" height="88"/></clipPath>
-                                </defs>
-                                <ellipse cx="74" cy="165" rx="32" ry="7" fill="rgba(0,0,0,.28)" filter="url(#fGP)"/>
-                                <circle cx="74" cy="112" r="38" stroke="#2e1804" stroke-width="15" fill="none"/>
-                                <circle cx="74" cy="112" r="38" stroke="url(#gBandP)" stroke-width="15" fill="none" clip-path="url(#cLP)"/>
-                                <rect x="56" y="70" width="36" height="11" rx="3.5" fill="#9c6c0c" filter="url(#fGP)"/>
-                                <path d="M60 70 Q57 56 54 42" stroke="#c88c18" stroke-width="2.6" fill="none" stroke-linecap="round"/>
-                                <path d="M74 68 Q74 54 74 39" stroke="#dcac20" stroke-width="2.6" fill="none" stroke-linecap="round"/>
-                                <path d="M88 70 Q91 56 94 42" stroke="#c88c18" stroke-width="2.6" fill="none" stroke-linecap="round"/>
-                                <polygon points="74,86 56,70 92,70" fill="#2464a4" filter="url(#fGP)" opacity=".82"/>
-                                <polygon points="74,86 56,70 49,46 74,37" fill="#b4e2ff"/>
-                                <polygon points="74,86 92,70 99,46 74,37" fill="#e2f5ff"/>
-                                <polygon points="74,37 49,46 59,59 89,59 99,46" fill="url(#gDTP)" filter="url(#fGP)"/>
-                                <ellipse cx="66" cy="47" rx="7" ry="4" fill="rgba(255,255,255,.75)" transform="rotate(-22,66,47)" filter="url(#fGP)"/>
-                            </svg>
+                    <div class="poke-ring-section" aria-hidden="true">
+                        <!-- Anillo -->
+                        <div class="poke-ring-wrap" id="pokeRing">
+                            <div class="poke-ring-float">
+                                <svg width="148" height="172" viewBox="0 0 148 172" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <defs>
+                                        <linearGradient id="gBandP" x1="0" y1="0" x2="1" y2="0">
+                                            <stop offset="0%" stop-color="#3e2406"/>
+                                            <stop offset="50%" stop-color="#ecd050"/>
+                                            <stop offset="100%" stop-color="#3e2406"/>
+                                        </linearGradient>
+                                        <linearGradient id="gDTP" x1=".3" y1="0" x2=".7" y2="1">
+                                            <stop offset="0%" stop-color="#ffffff"/>
+                                            <stop offset="100%" stop-color="#88c0e0"/>
+                                        </linearGradient>
+                                        <filter id="fGP" x="-55%" y="-55%" width="210%" height="210%">
+                                            <feGaussianBlur stdDeviation="2.8" result="b"/>
+                                            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+                                        </filter>
+                                        <clipPath id="cLP"><rect x="0" y="84" width="148" height="88"/></clipPath>
+                                    </defs>
+                                    <ellipse cx="74" cy="165" rx="32" ry="7" fill="rgba(0,0,0,.28)" filter="url(#fGP)"/>
+                                    <circle cx="74" cy="112" r="38" stroke="#2e1804" stroke-width="15" fill="none"/>
+                                    <circle cx="74" cy="112" r="38" stroke="url(#gBandP)" stroke-width="15" fill="none" clip-path="url(#cLP)"/>
+                                    <rect x="56" y="70" width="36" height="11" rx="3.5" fill="#9c6c0c" filter="url(#fGP)"/>
+                                    <path d="M60 70 Q57 56 54 42" stroke="#c88c18" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+                                    <path d="M74 68 Q74 54 74 39" stroke="#dcac20" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+                                    <path d="M88 70 Q91 56 94 42" stroke="#c88c18" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+                                    <polygon points="74,86 56,70 92,70" fill="#2464a4" filter="url(#fGP)" opacity=".82"/>
+                                    <polygon points="74,86 56,70 49,46 74,37" fill="#b4e2ff"/>
+                                    <polygon points="74,86 92,70 99,46 74,37" fill="#e2f5ff"/>
+                                    <polygon points="74,37 49,46 59,59 89,59 99,46" fill="url(#gDTP)" filter="url(#fGP)"/>
+                                    <ellipse cx="66" cy="47" rx="7" ry="4" fill="rgba(255,255,255,.75)" transform="rotate(-22,66,47)" filter="url(#fGP)"/>
+                                </svg>
+                            </div>
                         </div>
                     </div>
                     
-                    <!-- Pokéball -->
-                    <div class="poke-ball-wrap" id="pokeBallWrap" onclick="openPokeBall()">
-                        <div class="poke-e-ring"></div>
-                        <div class="poke-e-ring"></div>
-                        <div class="poke-e-ring"></div>
-                        <div class="poke-ball">
-                            <div class="poke-half poke-h-top">
-                                <div class="poke-fill"></div>
+                    <div class="poke-ball-section">
+                        <!-- Pokéball -->
+                        <div class="poke-ball-wrap" id="pokeBallWrap" onclick="openPokeBall()">
+                            <div class="poke-e-ring"></div>
+                            <div class="poke-e-ring"></div>
+                            <div class="poke-e-ring"></div>
+                            <div class="poke-ball">
+                                <div class="poke-half poke-h-top">
+                                    <div class="poke-fill"></div>
+                                </div>
+                                <div class="poke-band"></div>
+                                <div class="poke-btn"></div>
+                                <div class="poke-half poke-h-bot">
+                                    <div class="poke-fill"></div>
+                                </div>
                             </div>
-                            <div class="poke-band"></div>
-                            <div class="poke-btn"></div>
-                            <div class="poke-half poke-h-bot">
-                                <div class="poke-fill"></div>
-                            </div>
+                            <div class="poke-p-layer" id="pokePLayer"></div>
                         </div>
-                        <div class="poke-p-layer" id="pokePLayer"></div>
                     </div>
                 </div>
                 

@@ -2441,18 +2441,20 @@ body::after {
     position: relative;
     z-index: 10;
     width: 100vw;
-    height: 100vh;
+    height: auto; /* evitar ocupar toda la altura de la ventana */
     display: grid;
     place-items: center;
+    padding-block: 48px; /* espacio superior e inferior controlado */
 }
 
 .poke-card {
+    position: relative; /* permite posicionar elementos internos sin afectar el flujo */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 60px 50px 70px;
+    padding: 20px 36px 18px; /* reducir padding para eliminar espacio residual */
     background: rgba(26, 39, 68, 0.82);
     backdrop-filter: blur(40px) saturate(1.5);
     -webkit-backdrop-filter: blur(40px) saturate(1.5);
@@ -2504,12 +2506,22 @@ body::after {
 
 .poke-stage {
     position: relative;
-    width: 260px;
-    height: 260px;
+    width: 300px;
+    height: 300px;
     margin: 0;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.poke-ring-section,
+.poke-ball-section {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+.poke-ball-section {
+    pointer-events: auto;
 }
 
 .poke-halo {
@@ -2517,8 +2529,8 @@ body::after {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 250px;
-    height: 250px;
+    width: 335px;
+    height: 335px;
     border-radius: 50%;
     background: radial-gradient(circle, rgba(204, 32, 16, 0.25) 0%, rgba(135, 206, 235, 0.12) 40%, rgba(212, 96, 122, 0.06) 60%, transparent 75%);
     animation: pokeHaloBreathe 3.2s ease-in-out infinite;
@@ -2532,9 +2544,12 @@ body::after {
 
 /* Pokéball - 30% más pequeña */
 .poke-ball-wrap {
-    position: relative;
-    width: 220px;
-    height: 220px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 300px;
     cursor: pointer;
     filter: drop-shadow(0 14px 38px rgba(204, 32, 16, 0.54));
     transition: filter 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -2544,13 +2559,13 @@ body::after {
 }
 
 .poke-ball-wrap:hover:not(.opened) {
-    filter: drop-shadow(0 16px 48px rgba(204, 32, 16, 0.88)) drop-shadow(0 0 88px rgba(212, 96, 122, 0.45));
-    transform: scale(1.08);
+    filter: drop-shadow(0 14px 38px rgba(204, 32, 16, 0.88)) drop-shadow(0 0 88px rgba(212, 96, 122, 0.45));
+    transform: translate(-50%, -50%) scale(1.08);
 }
 
 .poke-ball {
-    width: 220px;
-    height: 220px;
+    width: 300px;
+    height: 300px;
     position: relative;
     display: flex;
     align-items: center;
@@ -2571,8 +2586,8 @@ body::after {
 .poke-half {
     position: absolute;
     left: 0;
-    width: 220px;
-    height: 110px;
+    width: 300px;
+    height: 150px;
     overflow: hidden;
 }
 
@@ -2588,8 +2603,8 @@ body::after {
 
 .poke-h-top .poke-fill,
 .poke-h-bot .poke-fill {
-    width: 220px;
-    height: 220px;
+    width: 300px;
+    height: 300px;
     border-radius: 50%;
     position: absolute;
     left: 0;
@@ -2611,7 +2626,7 @@ body::after {
     left: 0;
     transform: translateY(-50%);
     width: 100%;
-    height: 12px;
+    height: 16px;
     background: #0a0a0a;
     z-index: 5;
 }
@@ -2621,8 +2636,8 @@ body::after {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 34px;
-    height: 34px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     background: radial-gradient(circle at 36% 32%, #fff 0%, #e4e0da 52%, #b0a8a0 100%);
     border: 5px solid #0a0a0a;
@@ -2680,8 +2695,8 @@ body::after {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 220px;
-    height: 220px;
+    width: 300px;
+    height: 300px;
     border-radius: 50%;
     transform: translate(-50%, -50%) scale(0);
     opacity: 0;
@@ -2741,7 +2756,11 @@ body::after {
 
 /* Proposal */
 .poke-proposal {
-    margin-top: 24px;
+    position: absolute; /* sacar del flujo para que no genere espacio debajo */
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 18px;
+    width: calc(100% - 48px);
     text-align: center;
     opacity: 0;
     pointer-events: none;
@@ -2929,16 +2948,16 @@ body::after {
 }
 
 @media (max-width: 600px) {
-    .poke-card { padding: 40px 20px 50px; }
-    .poke-stage { width: 250px; height: 250px; display: flex; align-items: center; justify-content: center; }
-    .poke-halo { width: 240px; height: 240px; }
-    .poke-ball-wrap { width: 180px; height: 180px; display: flex; align-items: center; justify-content: center; }
-    .poke-ball { width: 180px; height: 180px; display: flex; align-items: center; justify-content: center; }
-    .poke-half { width: 180px; height: 90px; }
-    .poke-h-top .poke-fill, .poke-h-bot .poke-fill { width: 180px; height: 180px; }
-    .poke-band { height: 12px; }
-    .poke-btn { width: 32px; height: 32px; border-width: 4px; }
-    .poke-e-ring { width: 180px; height: 180px; }
+    .poke-card { padding: 20px 16px 16px; }
+    .poke-stage { width: 240px; height: 240px; display: flex; align-items: center; justify-content: center; }
+    .poke-halo { width: 280px; height: 280px; }
+    .poke-ball-wrap { width: 240px; height: 240px; display: flex; align-items: center; justify-content: center; }
+    .poke-ball { width: 240px; height: 240px; display: flex; align-items: center; justify-content: center; }
+    .poke-half { width: 240px; height: 120px; }
+    .poke-h-top .poke-fill, .poke-h-bot .poke-fill { width: 240px; height: 240px; }
+    .poke-band { height: 14px; }
+    .poke-btn { width: 36px; height: 36px; border-width: 4px; }
+    .poke-e-ring { width: 240px; height: 240px; }
 }
 
 /* ================================
@@ -3529,6 +3548,170 @@ body::after {
     }
 
     .footer-social-list {
+        justify-content: center;
+    }
+
+    .footer-social-divider {
+        width: 60%;
+        max-width: 220px;
+        height: 1px;
+        background: linear-gradient(90deg,
+            transparent 0%,
+            var(--footer-border) 50%,
+            transparent 100%);
+    }
+
+    .footer-social-dev {
+        text-align: center;
+    }
+
+    .footer-social-dev-row {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .footer-link,
+    .footer-link i,
+    .social-link {
+        transition: none !important;
+    }
+
+    .footer-link:hover,
+    .footer-link:focus-visible,
+    .social-link:hover,
+    .social-link:focus-visible {
+        transform: none;
+    }
+}
+
+/* ================================
+   MAGIC BACKGROUND
+   Pétalos + bokeh dorado + estrellas
+   Capa fija detrás de todo el contenido
+   ================================ */
+.magic-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.magic-petals,
+.magic-bokeh,
+.magic-stars {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+/* ── Pétalos: caen lentamente con oscilación lateral ── */
+.magic-petal {
+    position: absolute;
+    top: -20px;
+    border-radius: 65% 35% 60% 40% / 50% 60% 40% 50%;
+    filter: blur(0.3px);
+    opacity: 0;
+    animation: petalFall var(--p-dur, 18s) linear var(--p-del, 0s) infinite;
+    will-change: transform, opacity;
+    box-shadow: 0 0 6px rgba(255, 220, 200, 0.25);
+}
+
+@keyframes petalFall {
+    0% {
+        transform: translate3d(0, -10vh, 0) rotate(0deg);
+        opacity: 0;
+    }
+    8% {
+        opacity: 0.9;
+    }
+    50% {
+        transform: translate3d(var(--p-sway, 30px), 50vh, 0) rotate(180deg);
+    }
+    92% {
+        opacity: 0.9;
+    }
+    100% {
+        transform: translate3d(calc(var(--p-sway, 30px) * -0.4), 110vh, 0) rotate(var(--p-rot, 360deg));
+        opacity: 0;
+    }
+}
+
+/* ── Bokeh dorado: puntos brillantes que suben y se desvanecen ── */
+.magic-bokeh-dot {
+    position: absolute;
+    bottom: -20px;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+        hsla(var(--b-hue, 45), 80%, 75%, 1) 0%,
+        hsla(var(--b-hue, 45), 80%, 60%, 0.6) 40%,
+        transparent 75%);
+    filter: blur(1px);
+    opacity: 0;
+    animation: bokehRise var(--b-dur, 14s) ease-in-out var(--b-del, 0s) infinite;
+    will-change: transform, opacity;
+}
+
+@keyframes bokehRise {
+    0% {
+        transform: translate3d(0, 0, 0) scale(0.6);
+        opacity: 0;
+    }
+    15% {
+        opacity: var(--b-op, 0.6);
+    }
+    50% {
+        transform: translate3d(20px, -50vh, 0) scale(1.1);
+    }
+    85% {
+        opacity: var(--b-op, 0.6);
+    }
+    100% {
+        transform: translate3d(-10px, -110vh, 0) scale(0.4);
+        opacity: 0;
+    }
+}
+
+/* ── Estrellas: titilan suavemente en posiciones fijas ── */
+.magic-star {
+    position: absolute;
+    border-radius: 50%;
+    background: hsla(var(--s-hue, 42), 75%, 88%, 1);
+    box-shadow: 0 0 6px hsla(var(--s-hue, 42), 80%, 70%, 0.7);
+    animation: starTwinkle var(--s-dur, 3s) ease-in-out var(--s-del, 0s) infinite;
+    will-change: opacity, transform;
+}
+
+@keyframes starTwinkle {
+    0%, 100% {
+        opacity: 0.2;
+        transform: scale(0.85);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.25);
+    }
+}
+
+/* ── Accesibilidad: si el usuario prefiere menos movimiento ── */
+@media (prefers-reduced-motion: reduce) {
+    .magic-bg {
+        display: none;
+    }
+}
+
+/* ── Responsive: en móvil afinamos el efecto ── */
+@media (max-width: 600px) {
+    .magic-petal {
+        filter: blur(0.5px);
+    }
+    .magic-bokeh-dot {
+        filter: blur(1.5px);
+    }
+}
+t {
         justify-content: center;
     }
 
