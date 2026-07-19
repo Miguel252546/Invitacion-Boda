@@ -1127,6 +1127,20 @@ body::after {
     background: rgba(30, 41, 59, 0.85);
 }
 
+.video .container {
+    position: relative;
+    z-index: 1;
+}
+
+.video .section-title {
+    color: #fff;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4), 0 0 30px rgba(135, 206, 235, 0.25);
+    margin-bottom: 50px;
+    font-size: clamp(2rem, 4.5vw, 2.8rem);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
+
 .video-wrapper {
     max-width: 800px;
     margin: 0 auto;
@@ -3199,9 +3213,10 @@ body::after {
     background: var(--footer-bg);
     background-image: linear-gradient(180deg, var(--navy-light) 0%, var(--navy) 100%);
     color: var(--footer-text);
-    padding: 36px 24px 18px;
+    padding: 48px 24px 22px;
     font-family: var(--font-body);
-    line-height: 1.5;
+    line-height: 1.6;
+    font-size: 1rem;
     border-top: 1px solid var(--footer-border);
     position: relative;
 }
@@ -3218,10 +3233,10 @@ body::after {
 
 .footer-title {
     font-family: var(--font-display);
-    font-size: 0.85rem;
+    font-size: 1.05rem;
     font-weight: 600;
     color: var(--footer-text);
-    margin: 0 0 14px;
+    margin: 0 0 16px;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -3258,8 +3273,8 @@ body::after {
     gap: 9px;
     color: var(--footer-text-muted);
     text-decoration: none;
-    font-size: 0.85rem;
-    padding: 3px 0;
+    font-size: 0.95rem;
+    padding: 4px 0;
     transition: color var(--footer-transition),
                 transform var(--footer-transition);
     position: relative;
@@ -3398,8 +3413,8 @@ body::after {
     display: flex;
     align-items: center;
     gap: 6px;
-    margin: 0 0 8px;
-    font-size: 0.82rem;
+    margin: 0 0 10px;
+    font-size: 0.95rem;
     font-weight: 500;
     color: var(--footer-text);
     letter-spacing: 0.04em;
@@ -3447,9 +3462,9 @@ body::after {
 .footer-copyright {
     margin: 0;
     color: var(--footer-text-muted);
-    font-size: 0.78rem;
+    font-size: 0.9rem;
     letter-spacing: 0.12em;
-    opacity: 0.8;
+    opacity: 0.85;
 }
 
 @media (max-width: 900px) {
