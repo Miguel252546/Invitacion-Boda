@@ -2514,13 +2514,9 @@ body::after {
     justify-content: center;
 }
 
-.poke-ring-section,
 .poke-ball-section {
     position: absolute;
     inset: 0;
-    pointer-events: none;
-}
-.poke-ball-section {
     pointer-events: auto;
 }
 
@@ -2730,7 +2726,7 @@ body::after {
 }
 
 .poke-ring-wrap svg {
-    width: 190px;
+    width: 260px;
     height: auto;
 }
 
@@ -2756,14 +2752,15 @@ body::after {
 
 /* Proposal */
 .poke-proposal {
-    position: absolute; /* sacar del flujo para que no genere espacio debajo */
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 18px;
-    width: calc(100% - 48px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
     text-align: center;
     opacity: 0;
     pointer-events: none;
+    width: 100%;
+    max-width: 420px;
 }
 
 .poke-proposal.show {
@@ -2784,7 +2781,6 @@ body::after {
 }
 
 .poke-p-sub {
-    margin-top: 14px;
     font-size: clamp(14px, 2vw, 18px);
     font-style: italic;
     font-weight: 400;
@@ -2794,7 +2790,6 @@ body::after {
 }
 
 .poke-yes-btn {
-    margin-top: 24px;
     padding: 18px 52px;
     background: linear-gradient(135deg, rgba(135, 206, 235, 0.15), rgba(26, 39, 68, 0.3));
     border: 1.5px solid var(--sky-main);
@@ -2958,6 +2953,7 @@ body::after {
     .poke-band { height: 14px; }
     .poke-btn { width: 36px; height: 36px; border-width: 4px; }
     .poke-e-ring { width: 240px; height: 240px; }
+    .poke-ring-wrap svg { width: 210px; }
 }
 
 /* ================================
@@ -3733,7 +3729,6 @@ t {
         flex-wrap: wrap;
         justify-content: center;
     }
-}
 
 @media (prefers-reduced-motion: reduce) {
     .footer-link,
