@@ -2454,7 +2454,7 @@ body::after {
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 20px 36px 18px; /* reducir padding para eliminar espacio residual */
+    padding: 20px 36px 8px; /* reducir padding para eliminar espacio residual */
     background: rgba(26, 39, 68, 0.82);
     backdrop-filter: blur(40px) saturate(1.5);
     -webkit-backdrop-filter: blur(40px) saturate(1.5);
@@ -2506,8 +2506,8 @@ body::after {
 
 .poke-stage {
     position: relative;
-    width: 300px;
-    height: 300px;
+    width: 380px;
+    height: 380px;
     margin: 0;
     display: flex;
     align-items: center;
@@ -2525,8 +2525,8 @@ body::after {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 335px;
-    height: 335px;
+    width: 425px;
+    height: 425px;
     border-radius: 50%;
     background: radial-gradient(circle, rgba(204, 32, 16, 0.25) 0%, rgba(135, 206, 235, 0.12) 40%, rgba(212, 96, 122, 0.06) 60%, transparent 75%);
     animation: pokeHaloBreathe 3.2s ease-in-out infinite;
@@ -2544,8 +2544,8 @@ body::after {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 300px;
-    height: 300px;
+    width: 380px;
+    height: 380px;
     cursor: pointer;
     filter: drop-shadow(0 14px 38px rgba(204, 32, 16, 0.54));
     transition: filter 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -2560,8 +2560,8 @@ body::after {
 }
 
 .poke-ball {
-    width: 300px;
-    height: 300px;
+    width: 380px;
+    height: 380px;
     position: relative;
     display: flex;
     align-items: center;
@@ -2582,8 +2582,8 @@ body::after {
 .poke-half {
     position: absolute;
     left: 0;
-    width: 300px;
-    height: 150px;
+    width: 380px;
+    height: 190px;
     overflow: hidden;
 }
 
@@ -2599,8 +2599,8 @@ body::after {
 
 .poke-h-top .poke-fill,
 .poke-h-bot .poke-fill {
-    width: 300px;
-    height: 300px;
+    width: 380px;
+    height: 380px;
     border-radius: 50%;
     position: absolute;
     left: 0;
@@ -2622,7 +2622,7 @@ body::after {
     left: 0;
     transform: translateY(-50%);
     width: 100%;
-    height: 16px;
+    height: 20px;
     background: #0a0a0a;
     z-index: 5;
 }
@@ -2632,8 +2632,8 @@ body::after {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 44px;
-    height: 44px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
     background: radial-gradient(circle at 36% 32%, #fff 0%, #e4e0da 52%, #b0a8a0 100%);
     border: 5px solid #0a0a0a;
@@ -2691,8 +2691,8 @@ body::after {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 300px;
-    height: 300px;
+    width: 380px;
+    height: 380px;
     border-radius: 50%;
     transform: translate(-50%, -50%) scale(0);
     opacity: 0;
@@ -2726,7 +2726,7 @@ body::after {
 }
 
 .poke-ring-wrap svg {
-    width: 260px;
+    width: 330px;
     height: auto;
 }
 
@@ -2829,7 +2829,7 @@ body::after {
 }
 
 .poke-hint {
-    margin-top: 24px;
+    margin-top: 12px;
     font-size: clamp(14px, 2vw, 18px);
     font-style: italic;
     font-weight: 400;
@@ -2943,17 +2943,17 @@ body::after {
 }
 
 @media (max-width: 600px) {
-    .poke-card { padding: 20px 16px 16px; }
-    .poke-stage { width: 240px; height: 240px; display: flex; align-items: center; justify-content: center; }
-    .poke-halo { width: 280px; height: 280px; }
-    .poke-ball-wrap { width: 240px; height: 240px; display: flex; align-items: center; justify-content: center; }
-    .poke-ball { width: 240px; height: 240px; display: flex; align-items: center; justify-content: center; }
-    .poke-half { width: 240px; height: 120px; }
-    .poke-h-top .poke-fill, .poke-h-bot .poke-fill { width: 240px; height: 240px; }
-    .poke-band { height: 14px; }
-    .poke-btn { width: 36px; height: 36px; border-width: 4px; }
-    .poke-e-ring { width: 240px; height: 240px; }
-    .poke-ring-wrap svg { width: 210px; }
+    .poke-card { padding: 20px 16px 8px; }
+    .poke-stage { width: 300px; height: 300px; display: flex; align-items: center; justify-content: center; }
+    .poke-halo { width: 350px; height: 350px; }
+    .poke-ball-wrap { width: 300px; height: 300px; display: flex; align-items: center; justify-content: center; }
+    .poke-ball { width: 300px; height: 300px; display: flex; align-items: center; justify-content: center; }
+    .poke-half { width: 300px; height: 150px; }
+    .poke-h-top .poke-fill, .poke-h-bot .poke-fill { width: 300px; height: 300px; }
+    .poke-band { height: 18px; }
+    .poke-btn { width: 44px; height: 44px; border-width: 4px; }
+    .poke-e-ring { width: 300px; height: 300px; }
+    .poke-ring-wrap svg { width: 260px; }
 }
 
 /* ================================
