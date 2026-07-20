@@ -36,11 +36,11 @@
                 <div class="poke-rule"></div>
                 
                 <div class="poke-stage" id="pokeStage">
-                    <div class="poke-halo"></div>
+                    <div class="pokeball-halo"></div>
                     
-                    <!-- Anillo -->
-                    <div class="poke-ring-wrap" id="pokeRing">
-                            <div class="poke-ring-float">
+                    <!-- ══ COMPONENTE: ANILLO ══ -->
+                    <div class="ring-wrap" id="pokeRing">
+                            <div class="ring-float">
                                 <svg width="148" height="172" viewBox="0 0 148 172" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <defs>
                                         <linearGradient id="gBandP" x1="0" y1="0" x2="1" y2="0">
@@ -74,23 +74,23 @@
                             </div>
                         </div>
                     
-                    <div class="poke-ball-section">
-                        <!-- Pokéball -->
-                        <div class="poke-ball-wrap" id="pokeBallWrap" onclick="openPokeBall()">
-                            <div class="poke-e-ring"></div>
-                            <div class="poke-e-ring"></div>
-                            <div class="poke-e-ring"></div>
-                            <div class="poke-ball">
-                                <div class="poke-half poke-h-top">
-                                    <div class="poke-fill"></div>
+                    <!-- ══ COMPONENTE: POKÉBALLA ══ -->
+                    <div class="pokeball-section">
+                        <div class="pokeball-wrap" id="pokeBallWrap" onclick="openPokeBall()">
+                            <div class="pokeball-e-ring"></div>
+                            <div class="pokeball-e-ring"></div>
+                            <div class="pokeball-e-ring"></div>
+                            <div class="pokeball-body">
+                                <div class="pokeball-half pokeball-h-top">
+                                    <div class="pokeball-fill"></div>
                                 </div>
-                                <div class="poke-band"></div>
-                                <div class="poke-btn"></div>
-                                <div class="poke-half poke-h-bot">
-                                    <div class="poke-fill"></div>
+                                <div class="pokeball-band"></div>
+                                <div class="pokeball-btn"></div>
+                                <div class="pokeball-half pokeball-h-bot">
+                                    <div class="pokeball-fill"></div>
                                 </div>
                             </div>
-                            <div class="poke-p-layer" id="pokePLayer"></div>
+                            <div class="pokeball-p-layer" id="pokePLayer"></div>
                         </div>
                     </div>
                 </div>
@@ -722,7 +722,7 @@
         const pc = ['#c9a84c', '#f0d98a', '#d4607a', '#f0a0b4', '#fff', '#d6f0ff', '#ffe870'];
         for (let i = 0; i < 30; i++) {
             const p = document.createElement('div');
-            p.className = 'poke-p';
+            p.className = 'pokeball-p';
             const angle = (i / 30) * 360;
             const dist = 100 + Math.random() * 100;
             const dur = 0.6 + Math.random() * 0.5;
@@ -779,13 +779,22 @@
     
     // Open ball
     let pokeOpened = false;
+
+    function animatePokeballOpen() {
+        document.getElementById('pokeBallWrap').classList.add('opened');
+    }
+
+    function animateRingEntrance() {
+        document.getElementById('pokeRing').classList.add('show');
+    }
+
     function openPokeBall() {
         if (pokeOpened) return;
         pokeOpened = true;
         document.getElementById('pokeHint').style.opacity = '0';
         document.getElementById('pokeStage').classList.add('opened');
-        document.getElementById('pokeBallWrap').classList.add('opened');
-        setTimeout(() => document.getElementById('pokeRing').classList.add('show'), 550);
+        animatePokeballOpen();
+        setTimeout(() => animateRingEntrance(), 550);
         setTimeout(() => document.getElementById('pokeProposal').classList.add('show'), 2000);
     }
     
