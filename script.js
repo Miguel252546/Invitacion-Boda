@@ -293,21 +293,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 scrollTrigger: { trigger: '.countdown', start: 'top 80%', toggleActions: 'play none none reverse' },
                 opacity: 0, y: 50, scale: 0.8, duration: 0.8, stagger: 0.15, ease: 'back.out(1.4)'
             });
-            gsap.from('.parent-card', {
-                scrollTrigger: { trigger: '.parents', start: 'top 80%', toggleActions: 'play none none reverse' },
-                opacity: 0, y: 60, duration: 1, stagger: 0.25
-            });
-            gsap.from('.parent-heart', {
-                scrollTrigger: { trigger: '.parents', start: 'top 75%', toggleActions: 'play none none reverse' },
-                opacity: 0, scale: 0, rotation: -180, duration: 1, ease: 'back.out(1.7)'
-            });
             gsap.from('.gallery-item', {
                 scrollTrigger: { trigger: '.gallery', start: 'top 80%', toggleActions: 'play none none reverse' },
                 opacity: 0, y: 70, duration: 0.8, stagger: 0.1
-            });
-            gsap.from('.video-box', {
-                scrollTrigger: { trigger: '.video-section', start: 'top 70%', toggleActions: 'play none none reverse' },
-                opacity: 0, y: 60, scale: 0.95, duration: 1.2
             });
             gsap.from('.detalle-card', {
                 scrollTrigger: { trigger: '.detalles', start: 'top 80%' },
@@ -333,29 +321,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 scrollTrigger: { trigger: '.rsvp', start: 'top 55%', toggleActions: 'play none none reverse' },
                 opacity: 0, y: 30, scale: 0.9, duration: 0.8, delay: 0.5, ease: 'back.out(1.4)'
             });
-            gsap.from('.footer-hearts i', {
-                scrollTrigger: { trigger: '.footer', start: 'top 90%', toggleActions: 'play none none reverse' },
-                opacity: 0, scale: 0, duration: 0.5, stagger: 0.15, ease: 'back.out(1.7)'
-            });
-            gsap.from('.footer-names', {
-                scrollTrigger: { trigger: '.footer', start: 'top 85%', toggleActions: 'play none none reverse' },
-                opacity: 0, y: 30, duration: 1, delay: 0.3
-            });
-            gsap.from('.footer-date, .footer-tag', {
-                scrollTrigger: { trigger: '.footer', start: 'top 80%', toggleActions: 'play none none reverse' },
-                opacity: 0, y: 20, duration: 0.8, stagger: 0.15, delay: 0.5
-            });
-
-            // Anuncios en el footer (entrada premium)
-            gsap.from('.ads-rail', {
-                scrollTrigger: { trigger: '.ads-rail', start: 'top 92%', toggleActions: 'play none none reverse' },
-                opacity: 0, x: 30, duration: 0.9, delay: 0.5, ease: 'power3.out'
-            });
-            gsap.from('.ads-card', {
-                scrollTrigger: { trigger: '.ads-rail', start: 'top 90%', toggleActions: 'play none none reverse' },
-                opacity: 0, y: 20, scale: 0.96, duration: 0.7, stagger: 0.15, delay: 0.7, ease: 'power3.out'
-            });
-
             gsap.from('.float-btns', {
                 opacity: 0, x: 100, duration: 1, delay: 0.5
             });
@@ -452,6 +417,90 @@ document.addEventListener('DOMContentLoaded', () => {
                     const target = document.querySelector(this.getAttribute('href'));
                     if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 });
+            });
+        }
+    };
+
+    // =========================================================================
+    // VISUAL ENHANCER
+    // Scroll reveal + sparkle effects
+    // =========================================================================
+    const VisualEnhancer = {
+        init() {
+            if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+            this.initScrollReveal();
+            this.initSparkles();
+        },
+
+        initScrollReveal() {
+            const targets = [
+                '.opening-inner',
+                '.countdown-grid',
+                '.gallery-grid',
+                '.detalles-grid',
+                '.vestimenta-grid',
+                '.video-wrapper',
+                '.regalo-card',
+                '.regalos .regalo-card',
+                '.precio-tarjeta .regalo-card',
+                '.rsvp-box',
+                '.parents-grid',
+                '.historia-timeline'
+            ];
+
+            targets.forEach(selector => {
+                document.querySelectorAll(selector).forEach(el => {
+                    if (!el.classList.contains('reveal-up') && !el.classList.contains('reveal-scale')) {
+                        el.classList.add('reveal-up');
+                    }
+                });
+            });
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+            document.querySelectorAll('.reveal-up, .reveal-scale').forEach(el => observer.observe(el));
+        },
+
+        initSparkles() {
+            const containers = document.querySelectorAll('.section-title.light, .regalo-icon, .rsvp-icon, .deco-line i, .hero-names, .footer-title');
+            containers.forEach(container => {
+                const ring = document.createElement('div');
+                ring.className = 'sparkle-ring';
+                ring.style.cssText = 'position:absolute;inset:-20px;pointer-events:none;z-index:0;overflow:visible;';
+
+                const count = 4 + Math.floor(Math.random() * 3);
+                for (let i = 0; i < count; i++) {
+                    const dot = document.createElement('div');
+                    dot.className = 'sparkle-dot';
+                    const size = 3 + Math.random() * 4;
+                    const angle = (i / count) * 360;
+                    const dist = 20 + Math.random() * 25;
+                    const delay = Math.random() * 2;
+                    const colors = ['#fff', '#87CEEB', '#f7e5a4', '#ffb6c1', '#d4a64d'];
+                    const color = colors[i % colors.length];
+                    dot.style.cssText = `
+                        width:${size}px;height:${size}px;
+                        left:calc(50% + ${Math.cos(angle * Math.PI / 180) * dist}px);
+                        top:calc(50% + ${Math.sin(angle * Math.PI / 180) * dist}px);
+                        background:${color};
+                        box-shadow:0 0 ${size + 4}px ${color}, 0 0 ${size + 10}px rgba(135,206,235,0.4);
+                        animation-delay:${delay}s;
+                        animation-duration:${2 + Math.random() * 2}s;
+                    `;
+                    ring.appendChild(dot);
+                }
+
+                if (getComputedStyle(container).position === 'static') {
+                    container.style.position = 'relative';
+                }
+                container.appendChild(ring);
             });
         }
     };
@@ -556,6 +605,7 @@ document.addEventListener('DOMContentLoaded', () => {
             CountdownManager.init();
             AnimationManager.init();
             UIEffects.init();
+            VisualEnhancer.init();
             AdsManager.init();
             console.log('Wedding App: All modules initialized successfully.');
         }
