@@ -650,6 +650,7 @@
         
         resizeCanvases();
         window.addEventListener('resize', resizeCanvases);
+        window.addEventListener('orientationchange', () => setTimeout(resizeCanvases, 300));
         
         function drawSky() {
             skyCtx.clearRect(0, 0, skyW, skyH);
@@ -828,6 +829,7 @@
         const opening = document.getElementById('pokeOpening');
         const flash = document.getElementById('pokeFlash');
         const lightLines = document.getElementById('pokeLightLines');
+        const hero = document.querySelector('.hero');
 
         lightLines.classList.add('active');
         flash.classList.add('go');
@@ -837,14 +839,14 @@
 
         setTimeout(() => {
             flash.classList.remove('go');
-            opening.style.display = 'none';
             lightLines.classList.remove('active');
+            opening.style.display = 'none';
 
-            document.querySelector('.hero').classList.add('animate-in');
+            hero.classList.add('animate-in');
 
             setTimeout(() => {
-                document.getElementById('hero').scrollIntoView({ behavior: 'smooth' });
-            }, 300);
+                hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 350);
         }, 1200);
     }
     /* ══ FIN ORQUESTADOR ══ */
@@ -902,21 +904,23 @@
 
         // ── Pétalos flotando hacia abajo (rosa/dorado) ──
         const petalsContainer = document.getElementById('magicPetals');
-        const petalCount = 14;
+        const petalCount = 28;
         const petalColors = [
-            'rgba(244, 194, 194, 0.85)',  // rosa suave
-            'rgba(232, 184, 136, 0.80)',  // durazno
-            'rgba(212, 166, 77, 0.75)',   // dorado
-            'rgba(255, 245, 220, 0.85)'   // crema
+            'rgba(244, 194, 194, 0.90)',  // rosa suave
+            'rgba(232, 184, 136, 0.85)',  // durazno
+            'rgba(212, 166, 77, 0.80)',   // dorado
+            'rgba(255, 245, 220, 0.90)',  // crema
+            'rgba(220, 180, 200, 0.80)',  // rosado claro
+            'rgba(240, 210, 170, 0.85)'   // champagne
         ];
         for (let i = 0; i < petalCount; i++) {
             const p = document.createElement('div');
             p.className = 'magic-petal';
-            const size = 8 + Math.random() * 8;          // 8–16px
-            const dur = 14 + Math.random() * 10;         // 14–24s (caída lenta)
-            const del = Math.random() * -20;             // delay negativo para que aparezcan escalonadas
-            const left = Math.random() * 100;            // posición horizontal aleatoria
-            const sway = (Math.random() * 80) - 40;      // oscilación lateral
+            const size = 6 + Math.random() * 14;         // 6–20px
+            const dur = 12 + Math.random() * 14;         // 12–26s
+            const del = Math.random() * -28;
+            const left = Math.random() * 100;
+            const sway = (Math.random() * 100) - 50;
             const rot = (Math.random() * 360);
             const color = petalColors[i % petalColors.length];
             p.style.cssText = `
@@ -933,16 +937,17 @@
 
         // ── Bokeh dorado: puntos brillantes que suben y se desvanecen ──
         const bokehContainer = document.getElementById('magicBokeh');
-        const bokehCount = 18;
+        const bokehCount = 35;
         for (let i = 0; i < bokehCount; i++) {
             const b = document.createElement('div');
             b.className = 'magic-bokeh-dot';
-            const size = 4 + Math.random() * 8;          // 4–12px
-            const dur = 10 + Math.random() * 8;          // 10–18s (subida lenta)
-            const del = Math.random() * -15;
+            const size = 3 + Math.random() * 12;         // 3–15px
+            const dur = 8 + Math.random() * 12;          // 8–20s
+            const del = Math.random() * -20;
             const left = Math.random() * 100;
-            const goldHue = 42 + Math.random() * 14;     // rango dorado
-            const opacity = 0.35 + Math.random() * 0.4;
+            const sway = (Math.random() * 60) - 30;
+            const goldHue = 38 + Math.random() * 20;
+            const opacity = 0.3 + Math.random() * 0.5;
             b.style.cssText = `
                 width:${size}px;height:${size}px;
                 left:${left}vw;
@@ -950,22 +955,24 @@
                 --b-del:${del}s;
                 --b-hue:${goldHue};
                 --b-op:${opacity};
+                --b-sway:${sway}px;
             `;
             bokehContainer.appendChild(b);
         }
 
-        // ── Estrellitas titilando (coherencia con la Pokéball) ──
+        // ── Estrellitas titilando ──
         const starsContainer = document.getElementById('magicStars');
-        const starCount = 22;
+        const starCount = 45;
         for (let i = 0; i < starCount; i++) {
             const s = document.createElement('div');
             s.className = 'magic-star';
-            const size = 1 + Math.random() * 2.5;
-            const dur = 2 + Math.random() * 4;
-            const del = Math.random() * -6;
+            const size = 1 + Math.random() * 3.5;        // 1–4.5px
+            const dur = 2 + Math.random() * 5;
+            const del = Math.random() * -10;
             const top = Math.random() * 100;
             const left = Math.random() * 100;
-            const hue = [200, 42, 340, 280][i % 4];      // azul, dorado, rosa, lavanda
+            const hues = [200, 42, 340, 280, 45, 220, 10];
+            const hue = hues[i % hues.length];
             s.style.cssText = `
                 width:${size}px;height:${size}px;
                 top:${top}vh;left:${left}vw;
@@ -975,6 +982,41 @@
             `;
             starsContainer.appendChild(s);
         }
+
+        // ── Destellos (glitter): parpadeos rápidos ──
+        const glitterContainer = document.createElement('div');
+        glitterContainer.className = 'magic-glitter';
+        document.getElementById('magicBokeh').parentNode.appendChild(glitterContainer);
+        const glitterCount = 30;
+        for (let i = 0; i < glitterCount; i++) {
+            const g = document.createElement('div');
+            g.className = 'magic-glitter-dot';
+            const size = 1.5 + Math.random() * 3;
+            const dur = 1.5 + Math.random() * 2.5;
+            const del = Math.random() * -8;
+            const top = Math.random() * 100;
+            const left = Math.random() * 100;
+            g.style.cssText = `
+                width:${size}px;height:${size}px;
+                top:${top}vh;left:${left}vw;
+                --g-dur:${dur}s;
+                --g-del:${del}s;
+            `;
+            glitterContainer.appendChild(g);
+        }
+
+        // ── Lentes de luz ambiental ──
+        const flarePositions = [
+            { t: '15%', l: '20%', s: '300px', d: '0s' },
+            { t: '70%', l: '80%', s: '250px', d: '-5s' },
+            { t: '40%', l: '50%', s: '200px', d: '-10s' }
+        ];
+        flarePositions.forEach(({ t, l, s, d }) => {
+            const f = document.createElement('div');
+            f.className = 'magic-flare';
+            f.style.cssText = `top:${t};left:${l};width:${s};height:${s};animation-delay:${d};`;
+            document.getElementById('magicStars').parentNode.appendChild(f);
+        });
     })();
     </script>
 </body>

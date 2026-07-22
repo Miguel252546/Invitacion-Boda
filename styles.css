@@ -724,6 +724,15 @@ body::after {
     50% { transform: translateY(5px); }
 }
 
+.hero.animate-in {
+    animation: heroIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes heroIn {
+    0% { opacity: 0; transform: scale(1.05); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
 .scroll-hint { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 3; }
 
 .scroll-line {
@@ -2986,6 +2995,29 @@ body::after {
     .ring-wrap svg { width: 260px; }
 }
 
+/* Landscape en móvil: reducir tamaño para que entre en pantalla chica */
+@media (max-height: 500px) and (orientation: landscape) {
+    .poke-scene { padding-block: 12px; }
+    .poke-card { padding: 12px 16px 4px; width: min(480px, 94vw); }
+    .poke-stage { width: 200px; height: 200px; }
+    .poke-eyebrow { font-size: clamp(12px, 2vw, 14px); margin-bottom: 8px; }
+    .poke-rule { margin-bottom: 14px; }
+    .pokeball-halo { width: 240px; height: 240px; }
+    .pokeball-section { width: 200px; height: 200px; }
+    .pokeball-wrap { width: 200px; height: 200px; }
+    .pokeball-half { width: 200px; height: 100px; }
+    .pokeball-h-top .pokeball-fill, .pokeball-h-bot .pokeball-fill { width: 200px; height: 200px; }
+    .pokeball-band { height: 12px; }
+    .pokeball-btn { width: 32px; height: 32px; border-width: 3px; }
+    .pokeball-e-ring { width: 200px; height: 200px; }
+    .ring-wrap svg { width: 180px; }
+    .ring-wrap.show { animation-duration: 0.8s; }
+    .poke-proposal { gap: 8px; }
+    .poke-p-question { font-size: clamp(20px, 3vw, 28px); }
+    .poke-yes-btn { padding: 10px 28px; font-size: clamp(14px, 1.8vw, 16px); }
+    .poke-music-btn { bottom: 12px; right: 12px; width: 38px; height: 38px; }
+}
+
 /* ================================
    ADVERTISING RAIL (lateral, refinada)
    ============================================
@@ -3614,7 +3646,7 @@ body::after {
 
 /* ================================
    MAGIC BACKGROUND
-   Pétalos + bokeh dorado + estrellas
+   Pétalos + bokeh dorado + estrellas + destellos
    Capa fija detrás de todo el contenido
    ================================ */
 .magic-bg {
@@ -3623,11 +3655,27 @@ body::after {
     z-index: 0;
     pointer-events: none;
     overflow: hidden;
+    background: radial-gradient(ellipse at 30% 20%, rgba(135, 206, 235, 0.06) 0%, transparent 55%),
+                radial-gradient(ellipse at 70% 80%, rgba(212, 166, 77, 0.05) 0%, transparent 50%);
+}
+
+.magic-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(255, 215, 150, 0.04) 0%, transparent 60%);
+    animation: bgPulse 8s ease-in-out infinite;
+}
+
+@keyframes bgPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
 }
 
 .magic-petals,
 .magic-bokeh,
-.magic-stars {
+.magic-stars,
+.magic-glitter {
     position: absolute;
     inset: 0;
     pointer-events: none;
@@ -3642,7 +3690,16 @@ body::after {
     opacity: 0;
     animation: petalFall var(--p-dur, 18s) linear var(--p-del, 0s) infinite;
     will-change: transform, opacity;
-    box-shadow: 0 0 6px rgba(255, 220, 200, 0.25);
+    box-shadow: 0 0 12px rgba(255, 220, 200, 0.35), inset 0 0 8px rgba(255, 255, 255, 0.15);
+}
+
+.magic-petal:nth-child(3n) {
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+}
+
+.magic-petal:nth-child(5n+2) {
+    filter: blur(0.6px);
+    box-shadow: 0 0 18px rgba(255, 200, 180, 0.45);
 }
 
 @keyframes petalFall {
@@ -3650,17 +3707,17 @@ body::after {
         transform: translate3d(0, -10vh, 0) rotate(0deg);
         opacity: 0;
     }
-    8% {
-        opacity: 0.9;
+    6% {
+        opacity: 0.95;
     }
     50% {
         transform: translate3d(var(--p-sway, 30px), 50vh, 0) rotate(180deg);
     }
     92% {
-        opacity: 0.9;
+        opacity: 0.85;
     }
     100% {
-        transform: translate3d(calc(var(--p-sway, 30px) * -0.4), 110vh, 0) rotate(var(--p-rot, 360deg));
+        transform: translate3d(calc(var(--p-sway, 30px) * -0.5), 110vh, 0) rotate(var(--p-rot, 360deg));
         opacity: 0;
     }
 }
@@ -3671,31 +3728,44 @@ body::after {
     bottom: -20px;
     border-radius: 50%;
     background: radial-gradient(circle,
-        hsla(var(--b-hue, 45), 80%, 75%, 1) 0%,
-        hsla(var(--b-hue, 45), 80%, 60%, 0.6) 40%,
-        transparent 75%);
+        hsla(var(--b-hue, 45), 85%, 85%, 1) 0%,
+        hsla(var(--b-hue, 45), 80%, 60%, 0.6) 35%,
+        transparent 70%);
     filter: blur(1px);
     opacity: 0;
     animation: bokehRise var(--b-dur, 14s) ease-in-out var(--b-del, 0s) infinite;
     will-change: transform, opacity;
 }
 
+.magic-bokeh-dot:nth-child(4n) {
+    filter: blur(2px);
+    background: radial-gradient(circle,
+        hsla(330, 80%, 75%, 1) 0%,
+        hsla(330, 70%, 55%, 0.5) 35%,
+        transparent 70%);
+}
+
+.magic-bokeh-dot:nth-child(5n+3) {
+    filter: blur(1.5px);
+    animation-duration: calc(var(--b-dur, 14s) * 0.7);
+}
+
 @keyframes bokehRise {
     0% {
-        transform: translate3d(0, 0, 0) scale(0.6);
+        transform: translate3d(0, 0, 0) scale(0.4);
         opacity: 0;
     }
-    15% {
-        opacity: var(--b-op, 0.6);
+    12% {
+        opacity: var(--b-op, 0.7);
     }
     50% {
-        transform: translate3d(20px, -50vh, 0) scale(1.1);
+        transform: translate3d(var(--b-sway, 20px), -50vh, 0) scale(1.2);
     }
     85% {
-        opacity: var(--b-op, 0.6);
+        opacity: var(--b-op, 0.7);
     }
     100% {
-        transform: translate3d(-10px, -110vh, 0) scale(0.4);
+        transform: translate3d(calc(var(--b-sway, 20px) * -0.8), -110vh, 0) scale(0.3);
         opacity: 0;
     }
 }
@@ -3704,20 +3774,86 @@ body::after {
 .magic-star {
     position: absolute;
     border-radius: 50%;
-    background: hsla(var(--s-hue, 42), 75%, 88%, 1);
-    box-shadow: 0 0 6px hsla(var(--s-hue, 42), 80%, 70%, 0.7);
+    background: hsla(var(--s-hue, 42), 80%, 92%, 1);
+    box-shadow: 0 0 8px hsla(var(--s-hue, 42), 85%, 75%, 0.8),
+                0 0 20px hsla(var(--s-hue, 42), 80%, 65%, 0.3);
     animation: starTwinkle var(--s-dur, 3s) ease-in-out var(--s-del, 0s) infinite;
     will-change: opacity, transform;
 }
 
+.magic-star:nth-child(3n) {
+    box-shadow: 0 0 12px hsla(42, 90%, 80%, 0.9),
+                0 0 30px hsla(42, 85%, 70%, 0.4);
+    animation-duration: calc(var(--s-dur, 3s) * 1.3);
+}
+
 @keyframes starTwinkle {
     0%, 100% {
-        opacity: 0.2;
-        transform: scale(0.85);
+        opacity: 0.15;
+        transform: scale(0.8);
     }
     50% {
         opacity: 1;
-        transform: scale(1.25);
+        transform: scale(1.4);
+    }
+}
+
+/* ── Destellos (glitter): parpadean rápido y se desvanecen ── */
+.magic-glitter {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.magic-glitter-dot {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, transparent 70%);
+    box-shadow: 0 0 6px rgba(255, 255, 240, 0.6);
+    animation: glitterPop var(--g-dur, 2s) ease-out var(--g-del, 0s) infinite;
+    will-change: opacity, transform;
+}
+
+@keyframes glitterPop {
+    0%, 85%, 100% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    15% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+    30% {
+        opacity: 0.7;
+        transform: scale(0.8);
+    }
+}
+
+/* ── Brillo ambiental tipo "lens flare" ── */
+.magic-flare {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 220, 160, 0.08) 0%, transparent 70%);
+    animation: flareDrift 20s ease-in-out infinite;
+    will-change: transform, opacity;
+}
+
+@keyframes flareDrift {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+        opacity: 0.3;
+    }
+    25% {
+        transform: translate(60px, -30px) scale(1.3);
+        opacity: 0.6;
+    }
+    50% {
+        transform: translate(-20px, 40px) scale(0.9);
+        opacity: 0.4;
+    }
+    75% {
+        transform: translate(40px, 20px) scale(1.1);
+        opacity: 0.7;
     }
 }
 
@@ -3737,166 +3873,5 @@ body::after {
         filter: blur(1.5px);
     }
 }
-t {
-        justify-content: center;
-    }
 
-    .footer-social-divider {
-        width: 60%;
-        max-width: 220px;
-        height: 1px;
-        background: linear-gradient(90deg,
-            transparent 0%,
-            var(--footer-border) 50%,
-            transparent 100%);
-    }
 
-    .footer-social-dev {
-        text-align: center;
-    }
-
-    .footer-social-dev-row {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-@media (prefers-reduced-motion: reduce) {
-    .footer-link,
-    .footer-link i,
-    .social-link {
-        transition: none !important;
-    }
-
-    .footer-link:hover,
-    .footer-link:focus-visible,
-    .social-link:hover,
-    .social-link:focus-visible {
-        transform: none;
-    }
-}
-
-/* ================================
-   MAGIC BACKGROUND
-   Pétalos + bokeh dorado + estrellas
-   Capa fija detrás de todo el contenido
-   ================================ */
-.magic-bg {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    overflow: hidden;
-}
-
-.magic-petals,
-.magic-bokeh,
-.magic-stars {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-}
-
-/* ── Pétalos: caen lentamente con oscilación lateral ── */
-.magic-petal {
-    position: absolute;
-    top: -20px;
-    border-radius: 65% 35% 60% 40% / 50% 60% 40% 50%;
-    filter: blur(0.3px);
-    opacity: 0;
-    animation: petalFall var(--p-dur, 18s) linear var(--p-del, 0s) infinite;
-    will-change: transform, opacity;
-    box-shadow: 0 0 6px rgba(255, 220, 200, 0.25);
-}
-
-@keyframes petalFall {
-    0% {
-        transform: translate3d(0, -10vh, 0) rotate(0deg);
-        opacity: 0;
-    }
-    8% {
-        opacity: 0.9;
-    }
-    50% {
-        transform: translate3d(var(--p-sway, 30px), 50vh, 0) rotate(180deg);
-    }
-    92% {
-        opacity: 0.9;
-    }
-    100% {
-        transform: translate3d(calc(var(--p-sway, 30px) * -0.4), 110vh, 0) rotate(var(--p-rot, 360deg));
-        opacity: 0;
-    }
-}
-
-/* ── Bokeh dorado: puntos brillantes que suben y se desvanecen ── */
-.magic-bokeh-dot {
-    position: absolute;
-    bottom: -20px;
-    border-radius: 50%;
-    background: radial-gradient(circle,
-        hsla(var(--b-hue, 45), 80%, 75%, 1) 0%,
-        hsla(var(--b-hue, 45), 80%, 60%, 0.6) 40%,
-        transparent 75%);
-    filter: blur(1px);
-    opacity: 0;
-    animation: bokehRise var(--b-dur, 14s) ease-in-out var(--b-del, 0s) infinite;
-    will-change: transform, opacity;
-}
-
-@keyframes bokehRise {
-    0% {
-        transform: translate3d(0, 0, 0) scale(0.6);
-        opacity: 0;
-    }
-    15% {
-        opacity: var(--b-op, 0.6);
-    }
-    50% {
-        transform: translate3d(20px, -50vh, 0) scale(1.1);
-    }
-    85% {
-        opacity: var(--b-op, 0.6);
-    }
-    100% {
-        transform: translate3d(-10px, -110vh, 0) scale(0.4);
-        opacity: 0;
-    }
-}
-
-/* ── Estrellas: titilan suavemente en posiciones fijas ── */
-.magic-star {
-    position: absolute;
-    border-radius: 50%;
-    background: hsla(var(--s-hue, 42), 75%, 88%, 1);
-    box-shadow: 0 0 6px hsla(var(--s-hue, 42), 80%, 70%, 0.7);
-    animation: starTwinkle var(--s-dur, 3s) ease-in-out var(--s-del, 0s) infinite;
-    will-change: opacity, transform;
-}
-
-@keyframes starTwinkle {
-    0%, 100% {
-        opacity: 0.2;
-        transform: scale(0.85);
-    }
-    50% {
-        opacity: 1;
-        transform: scale(1.25);
-    }
-}
-
-/* ── Accesibilidad: si el usuario prefiere menos movimiento ── */
-@media (prefers-reduced-motion: reduce) {
-    .magic-bg {
-        display: none;
-    }
-}
-
-/* ── Responsive: en móvil afinamos el efecto ── */
-@media (max-width: 600px) {
-    .magic-petal {
-        filter: blur(0.5px);
-    }
-    .magic-bokeh-dot {
-        filter: blur(1.5px);
-    }
-}
