@@ -821,8 +821,11 @@
         pokeOpened = true;
         document.getElementById('pokeStage').classList.add('opened');
         animatePokeballOpen();
-        setTimeout(() => animateRingEntrance(), 550);
-        setTimeout(() => document.getElementById('pokeProposal').classList.add('show'), 2000);
+        if (window.startWeddingMusic) {
+            window.startWeddingMusic();
+        }
+        setTimeout(() => animateRingEntrance(), 350);
+        setTimeout(() => document.getElementById('pokeProposal').classList.add('show'), 1200);
     }
 
     function pokeSayYes() {
@@ -846,48 +849,10 @@
 
             setTimeout(() => {
                 hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 350);
-        }, 1200);
+            }, 200);
+        }, 700);
     }
     /* ══ FIN ORQUESTADOR ══ */
-    
-    /* ══ COMPONENTE: MUSIC-BTN ══ */
-    (function() {
-        const audio = document.getElementById('bgMusic');
-        const btn = document.getElementById('pokeMusicBtn');
-        let playing = false;
-        
-        audio.volume = 0.35;
-        
-        function play() {
-            audio.play().then(() => {
-                playing = true;
-                btn.classList.add('playing');
-                btn.setAttribute('data-tip', 'Pausar');
-            }).catch(() => {});
-        }
-        
-        function pause() {
-            audio.pause();
-            playing = false;
-            btn.classList.remove('playing');
-            btn.setAttribute('data-tip', 'Música');
-        }
-        
-        window.addEventListener('load', () => { play(); });
-        document.addEventListener('click', () => { if (!playing) play(); }, { once: true });
-        
-        btn.addEventListener('click', e => {
-            e.stopPropagation();
-            playing ? pause() : play();
-        });
-        
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden) pause();
-            else if (!playing) play();
-        });
-    })();
-    /* ══ FIN COMPONENTE: MUSIC-BTN ══ */
 </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>

@@ -33,37 +33,38 @@ document.addEventListener('DOMContentLoaded', () => {
     // =========================================================================
     const MusicManager = {
         isPlaying: false,
-        hasInteracted: false,
 
         init() {
             if (!DOM.audio) return;
             DOM.audio.volume = 0.25;
 
-            const tryPlay = () => {
-                if (!this.hasInteracted) {
-                    DOM.audio.play().then(() => {
-                        this.setPlaying(true);
-                    }).catch(() => { });
-                    this.hasInteracted = true;
+            this.pokeBtn = document.getElementById('pokeMusicBtn');
+            this.pokeTip = this.pokeBtn?.getAttribute('data-tip') || 'Música';
+
+            window.startWeddingMusic = () => {
+                if (!this.isPlaying) {
+                    this.play();
                 }
             };
-
-            document.addEventListener('click', tryPlay, { once: true });
-            document.addEventListener('touchstart', tryPlay, { once: true });
 
             DOM.musicBtn?.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                if (this.isPlaying) {
-                    this.pause();
-                } else {
-                    this.play();
-                }
+                this.isPlaying ? this.pause() : this.play();
+            });
+
+            this.pokeBtn?.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.isPlaying ? this.pause() : this.play();
+            });
+
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) this.pause();
             });
         },
 
         play() {
-            DOM.audio.play().then(() => this.setPlaying(true));
+            DOM.audio.play().then(() => this.setPlaying(true)).catch(() => {});
         },
 
         pause() {
@@ -75,6 +76,10 @@ document.addEventListener('DOMContentLoaded', () => {
             this.isPlaying = state;
             if (DOM.musicBtn) {
                 state ? DOM.musicBtn.classList.add('playing') : DOM.musicBtn.classList.remove('playing');
+            }
+            if (this.pokeBtn) {
+                state ? this.pokeBtn.classList.add('playing') : this.pokeBtn.classList.remove('playing');
+                this.pokeBtn.setAttribute('data-tip', state ? 'Pausar' : this.pokeTip);
             }
             if (DOM.musicIcon) {
                 DOM.musicIcon.className = state ? 'fas fa-volume-up' : 'fas fa-music';
