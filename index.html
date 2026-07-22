@@ -18,7 +18,7 @@
         <div class="magic-stars" id="magicStars"></div>
     </div>
 
-    <!-- ══ POKÉBALL OPENING ══ -->
+    <!-- ══ COMPONENTE: AMBIENTE-FX ══ -->
     <div class="poke-opening" id="pokeOpening">
         <div class="poke-flash" id="pokeFlash"></div>
         <div class="poke-light-lines" id="pokeLightLines">
@@ -29,52 +29,18 @@
         <canvas id="pokeSky"></canvas>
         <canvas id="pokeHearts"></canvas>
         <div class="poke-bg-layer" id="pokeBgLayer"></div>
-        
-        <div class="poke-scene">
+        <!-- ══ FIN COMPONENTE: AMBIENTE-FX ══ -->
+
+        <!-- ══ COMPONENTE: ESCENA-CARD — POKEBALL ══ -->
+        <div class="poke-scene pb-scene" id="pbScene">
             <div class="poke-card">
-                <div class="poke-eyebrow">Toca la Poke Ball</div>
+                <div class="poke-eyebrow">Toca la PokeBall</div>
                 <div class="poke-rule"></div>
-                
+
                 <div class="poke-stage" id="pokeStage">
                     <div class="pokeball-halo"></div>
-                    
-                    <!-- ══ COMPONENTE: ANILLO ══ -->
-                    <div class="ring-wrap" id="pokeRing">
-                            <div class="ring-float">
-                                <svg width="148" height="172" viewBox="0 0 148 172" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <defs>
-                                        <linearGradient id="gBandP" x1="0" y1="0" x2="1" y2="0">
-                                            <stop offset="0%" stop-color="#3e2406"/>
-                                            <stop offset="50%" stop-color="#ecd050"/>
-                                            <stop offset="100%" stop-color="#3e2406"/>
-                                        </linearGradient>
-                                        <linearGradient id="gDTP" x1=".3" y1="0" x2=".7" y2="1">
-                                            <stop offset="0%" stop-color="#ffffff"/>
-                                            <stop offset="100%" stop-color="#88c0e0"/>
-                                        </linearGradient>
-                                        <filter id="fGP" x="-55%" y="-55%" width="210%" height="210%">
-                                            <feGaussianBlur stdDeviation="2.8" result="b"/>
-                                            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-                                        </filter>
-                                        <clipPath id="cLP"><rect x="0" y="84" width="148" height="88"/></clipPath>
-                                    </defs>
-                                    <ellipse cx="74" cy="165" rx="32" ry="7" fill="rgba(0,0,0,.28)" filter="url(#fGP)"/>
-                                    <circle cx="74" cy="112" r="38" stroke="#2e1804" stroke-width="15" fill="none"/>
-                                    <circle cx="74" cy="112" r="38" stroke="url(#gBandP)" stroke-width="15" fill="none" clip-path="url(#cLP)"/>
-                                    <rect x="56" y="70" width="36" height="11" rx="3.5" fill="#9c6c0c" filter="url(#fGP)"/>
-                                    <path d="M60 70 Q57 56 54 42" stroke="#c88c18" stroke-width="2.6" fill="none" stroke-linecap="round"/>
-                                    <path d="M74 68 Q74 54 74 39" stroke="#dcac20" stroke-width="2.6" fill="none" stroke-linecap="round"/>
-                                    <path d="M88 70 Q91 56 94 42" stroke="#c88c18" stroke-width="2.6" fill="none" stroke-linecap="round"/>
-                                    <polygon points="74,86 56,70 92,70" fill="#2464a4" filter="url(#fGP)" opacity=".82"/>
-                                    <polygon points="74,86 56,70 49,46 74,37" fill="#b4e2ff"/>
-                                    <polygon points="74,86 92,70 99,46 74,37" fill="#e2f5ff"/>
-                                    <polygon points="74,37 49,46 59,59 89,59 99,46" fill="url(#gDTP)" filter="url(#fGP)"/>
-                                    <ellipse cx="66" cy="47" rx="7" ry="4" fill="rgba(255,255,255,.75)" transform="rotate(-22,66,47)" filter="url(#fGP)"/>
-                                </svg>
-                            </div>
-                        </div>
-                    
-                    <!-- ══ COMPONENTE: POKÉBALLA ══ -->
+
+                    <!-- ══ COMPONENTE: POKEBALL ══ -->
                     <div class="pokeball-section">
                         <div class="pokeball-wrap" id="pokeBallWrap" onclick="openPokeBall()">
                             <div class="pokeball-e-ring"></div>
@@ -93,17 +59,70 @@
                             <div class="pokeball-p-layer" id="pokePLayer"></div>
                         </div>
                     </div>
+                    <!-- ══ FIN COMPONENTE: POKEBALL ══ -->
                 </div>
-                
+            </div>
+        </div>
+        <!-- ══ FIN COMPONENTE: ESCENA-CARD — POKEBALL ══ -->
+
+        <!-- ══ COMPONENTE: ESCENA-CARD — ANILLO ══ -->
+        <div class="poke-scene ring-scene" id="ringScene">
+            <div class="poke-card">
+                <div class="poke-stage">
+                    <!-- ══ COMPONENTE: ANILLO ══ -->
+                    <div class="ring-wrap" id="pokeRing">
+                        <div class="ring-float">
+                            <svg width="148" height="172" viewBox="0 0 148 172" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <defs>
+                                    <linearGradient id="gBandP" x1="0" y1="0" x2="1" y2="0">
+                                        <stop offset="0%" stop-color="#3e2406"/>
+                                        <stop offset="50%" stop-color="#ecd050"/>
+                                        <stop offset="100%" stop-color="#3e2406"/>
+                                    </linearGradient>
+                                    <linearGradient id="gDTP" x1=".3" y1="0" x2=".7" y2="1">
+                                        <stop offset="0%" stop-color="#ffffff"/>
+                                        <stop offset="100%" stop-color="#88c0e0"/>
+                                    </linearGradient>
+                                    <filter id="fGP" x="-55%" y="-55%" width="210%" height="210%">
+                                        <feGaussianBlur stdDeviation="2.8" result="b"/>
+                                        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+                                    </filter>
+                                    <clipPath id="cLP"><rect x="0" y="84" width="148" height="88"/></clipPath>
+                                </defs>
+                                <ellipse cx="74" cy="165" rx="32" ry="7" fill="rgba(0,0,0,.28)" filter="url(#fGP)"/>
+                                <circle cx="74" cy="112" r="38" stroke="#2e1804" stroke-width="15" fill="none"/>
+                                <circle cx="74" cy="112" r="38" stroke="url(#gBandP)" stroke-width="15" fill="none" clip-path="url(#cLP)"/>
+                                <rect x="56" y="70" width="36" height="11" rx="3.5" fill="#9c6c0c" filter="url(#fGP)"/>
+                                <path d="M60 70 Q57 56 54 42" stroke="#c88c18" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+                                <path d="M74 68 Q74 54 74 39" stroke="#dcac20" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+                                <path d="M88 70 Q91 56 94 42" stroke="#c88c18" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+                                <polygon points="74,86 56,70 92,70" fill="#2464a4" filter="url(#fGP)" opacity=".82"/>
+                                <polygon points="74,86 56,70 49,46 74,37" fill="#b4e2ff"/>
+                                <polygon points="74,86 92,70 99,46 74,37" fill="#e2f5ff"/>
+                                <polygon points="74,37 49,46 59,59 89,59 99,46" fill="url(#gDTP)" filter="url(#fGP)"/>
+                                <ellipse cx="66" cy="47" rx="7" ry="4" fill="rgba(255,255,255,.75)" transform="rotate(-22,66,47)" filter="url(#fGP)"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <!-- ══ FIN COMPONENTE: ANILLO ══ -->
+                </div>
+
+                <!-- ══ COMPONENTE: PROPUESTA-CTA ══ -->
                 <div class="poke-proposal" id="pokeProposal">
                     <div class="poke-p-question">Acompañanos En Este Inicio de Viaje</div>
                     <div class="poke-p-sub"></div>
-                    <button class="poke-yes-btn" onclick="pokeSayYes()">Presiona Aca</button>
+                    <button class="poke-yes-btn" onclick="pokeSayYes()">Presiona Acá</button>
                 </div>
+                <!-- ══ FIN COMPONENTE: PROPUESTA-CTA ══ -->
+
+                <!-- ══ COMPONENTE: HINT ══ -->
                 <div class="poke-hint" id="pokeHint"></div>
+                <!-- ══ FIN COMPONENTE: HINT ══ -->
             </div>
         </div>
-        
+        <!-- ══ FIN COMPONENTE: ESCENA-CARD — ANILLO ══ -->
+
+        <!-- ══ COMPONENTE: MUSIC-BTN ══ -->
         <button class="poke-music-btn" id="pokeMusicBtn" data-tip="Música">
             <svg class="poke-ico" viewBox="0 0 24 24">
                 <path d="M9 18V5l12-2v13" stroke-width="1.6" stroke="currentColor" fill="none" stroke-linecap="round"/>
@@ -118,6 +137,7 @@
                 <div class="poke-wb"></div>
             </div>
         </button>
+        <!-- ══ FIN COMPONENTE: MUSIC-BTN ══ -->
     </div>
 
     <audio id="bgMusic" loop>
@@ -141,7 +161,7 @@
                 <p class="hero-subtitle">Estamos preparando todo para recibirte</p>
                 <div class="hero-names">
                     <span class="name">Yda</span>
-                    <span class="amp">&</span>
+                    <span class="amp">y</span>
                     <span class="name">Emi</span>
                 </div>
                 <div class="hero-date-row">
@@ -179,7 +199,7 @@
                     </p>
                     <div class="names-line">
                         <span>Yda</span>
-                        <span class="and">&</span>
+                        <span class="and">y</span>
                         <span>Emi</span>
                     </div>
                 </div>
@@ -462,17 +482,17 @@
                                     Novia <span class="footer-social-handle">Yda</span>
                                 </p>
                                 <ul class="footer-social-list" role="list">
-                                    <li>
+<!--                                     <li>
                                         <a href="#" target="_blank" rel="noopener" class="social-link social-facebook" aria-label="Facebook de la novia (se abre en una pestaña nueva)">
                                             <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
                                         </a>
-                                    </li>
+                                    </li> -->
                                     <li>
                                         <a href="#" target="_blank" rel="noopener" class="social-link social-instagram" aria-label="Instagram de la novia (se abre en una pestaña nueva)">
                                             <i class="fa-brands fa-instagram" aria-hidden="true"></i>
                                         </a>
                                     </li>
-                                    <li>
+<!--                                     <li>
                                         <a href="#" target="_blank" rel="noopener" class="social-link social-whatsapp" aria-label="WhatsApp de la novia (se abre en una pestaña nueva)">
                                             <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
                                         </a>
@@ -481,7 +501,7 @@
                                         <a href="#" target="_blank" rel="noopener" class="social-link social-tiktok" aria-label="TikTok de la novia (se abre en una pestaña nueva)">
                                             <i class="fa-brands fa-tiktok" aria-hidden="true"></i>
                                         </a>
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </div>
 
@@ -495,27 +515,27 @@
                                     Novio <span class="footer-social-handle">Emi</span>
                                 </p>
                                 <ul class="footer-social-list" role="list">
-                                    <li>
+<!--                                     <li>
                                         <a href="#" target="_blank" rel="noopener" class="social-link social-facebook" aria-label="Facebook del novio (se abre en una pestaña nueva)">
                                             <i class="fa-brands fa-facebook-f" aria-hidden="true"></i>
                                         </a>
-                                    </li>
+                                    </li> -->
                                     <li>
                                         <a href="#" target="_blank" rel="noopener" class="social-link social-instagram" aria-label="Instagram del novio (se abre en una pestaña nueva)">
                                             <i class="fa-brands fa-instagram" aria-hidden="true"></i>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#" target="_blank" rel="noopener" class="social-link social-whatsapp" aria-label="WhatsApp del novio (se abre en una pestaña nueva)">
+                                        <a href="https://wa.me/5493571639188?text=Hola%20Yda%2C%20quiero%20consultarte%20algo%20sobre%20la%20boda" target="_blank" rel="noopener" class="social-link social-whatsapp" aria-label="WhatsApp del novio (se abre en una pestaña nueva)">
                                             <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
                                         </a>
                                     </li>
-                                    <li>
+<!--                                     <li>
                                         <a href="#" target="_blank" rel="noopener" class="social-link social-tiktok" aria-label="TikTok del novio (se abre en una pestaña nueva)">
                                             <i class="fa-brands fa-tiktok" aria-hidden="true"></i>
                                         </a>
                                     </li>
-                                </ul>
+                                </ul> -->
                             </div>
                         </div>
 
@@ -577,13 +597,13 @@
                 </button>
                 <div class="dropdown-menu" id="dropdownMenu">
                     <p class="dropdown-title">Contactar a:</p>
-                    <a href="https://wa.me/5493516177173?text=Hola%20Emi%2C%20quiero%20consultarte%20algo%20sobre%20la%20boda" target="_blank" class="dropdown-item">
+<!--                     <a href="https://wa.me/5493516177173?text=Hola%20Emi%2C%20quiero%20consultarte%20algo%20sobre%20la%20boda" target="_blank" class="dropdown-item">
                         <i class="fas fa-female"></i>
                         <span>Yda</span>
-                    </a>
-                    <a href="https://wa.me/5493571639188?text=Hola%20Yda%2C%20quiero%20consultarte%20algo%20sobre%20la%20boda" target="_blank" class="dropdown-item">
+                    </a> -->
+                    <a href="https://wa.me/5493571639188?text=Hola%20Yda%20y%20Emi%2C%20quiero%20consultarte%20algo%20sobre%20la%20boda" target="_blank" class="dropdown-item">
                         <i class="fas fa-male"></i>
-                        <span>Emi</span>
+                        <span>Emi (Novio)</span>
                     </a>
                 </div>
             </div>
@@ -599,7 +619,7 @@
     </div>
 
     <script>
-    /* ══ POKÉBALL OPENING ══ */
+    /* ══ COMPONENTE: AMBIENTE-FX ══ */
     (function() {
         const skyCanvas = document.getElementById('pokeSky');
         const skyCtx = skyCanvas.getContext('2d');
@@ -717,22 +737,7 @@
         drawSky();
         drawHearts();
         
-        // Particles
-        const pLayer = document.getElementById('pokePLayer');
-        const pc = ['#c9a84c', '#f0d98a', '#d4607a', '#f0a0b4', '#fff', '#d6f0ff', '#ffe870'];
-        for (let i = 0; i < 30; i++) {
-            const p = document.createElement('div');
-            p.className = 'pokeball-p';
-            const angle = (i / 30) * 360;
-            const dist = 100 + Math.random() * 100;
-            const dur = 0.6 + Math.random() * 0.5;
-            const del = 0.25 + Math.random() * 0.4;
-            const size = 3 + Math.random() * 8;
-            p.style.cssText = `--ppa:${angle}deg;--ppdist:${dist}px;--ppt:${dur}s;--ppd:${del}s;background:${pc[i % pc.length]};width:${size}px;height:${size}px;box-shadow:0 0 ${size + 2}px ${pc[i % pc.length]};`;
-            pLayer.appendChild(p);
-        }
-        
-        // Floating background objects - POKÉBOLAS VISIBLES
+        // Floating background objects
         const bgLayer = document.getElementById('pokeBgLayer');
         const ballTypes = [
             ['#cc2010', '#111', '#f2ede8', '#cc2010'],
@@ -745,7 +750,6 @@
             ['#78b020', '#a8c840', '#f0ece0', '#78b020'],
         ];
         
-        // Posiciones distribuidas por toda la pantalla
         const ballPos = [
             {l: '5%', t: '110%'}, {l: '85%', t: '110%'}, {l: '25%', t: '105%'}, {l: '65%', t: '108%'},
             {l: '10%', t: '105%'}, {l: '90%', t: '105%'}, {l: '45%', t: '112%'}, {l: '55%', t: '110%'},
@@ -776,8 +780,27 @@
             }
         });
     })();
+    /* ══ FIN COMPONENTE: AMBIENTE-FX ══ */
     
-    // Open ball
+    /* ══ COMPONENTE: POKEBALL — Partículas ══ */
+    (function() {
+        const pLayer = document.getElementById('pokePLayer');
+        const pc = ['#c9a84c', '#f0d98a', '#d4607a', '#f0a0b4', '#fff', '#d6f0ff', '#ffe870'];
+        for (let i = 0; i < 30; i++) {
+            const p = document.createElement('div');
+            p.className = 'pokeball-p';
+            const angle = (i / 30) * 360;
+            const dist = 100 + Math.random() * 100;
+            const dur = 0.6 + Math.random() * 0.5;
+            const del = 0.25 + Math.random() * 0.4;
+            const size = 3 + Math.random() * 8;
+            p.style.cssText = `--ppa:${angle}deg;--ppdist:${dist}px;--ppt:${dur}s;--ppd:${del}s;background:${pc[i % pc.length]};width:${size}px;height:${size}px;box-shadow:0 0 ${size + 2}px ${pc[i % pc.length]};`;
+            pLayer.appendChild(p);
+        }
+    })();
+    /* ══ FIN COMPONENTE: POKEBALL ══ */
+    
+    /* ══ ORQUESTADOR ══ */
     let pokeOpened = false;
 
     function animatePokeballOpen() {
@@ -785,32 +808,30 @@
     }
 
     function animateRingEntrance() {
-        document.getElementById('pokeRing').classList.add('show');
+        document.getElementById('pbScene').style.opacity = '0';
+        document.getElementById('ringScene').classList.add('show');
+        setTimeout(() => {
+            document.getElementById('pokeRing').classList.add('show');
+        }, 700);
     }
 
     function openPokeBall() {
         if (pokeOpened) return;
         pokeOpened = true;
-        document.getElementById('pokeHint').style.opacity = '0';
         document.getElementById('pokeStage').classList.add('opened');
         animatePokeballOpen();
         setTimeout(() => animateRingEntrance(), 550);
         setTimeout(() => document.getElementById('pokeProposal').classList.add('show'), 2000);
     }
-    
-    // Say yes
+
     function pokeSayYes() {
         const opening = document.getElementById('pokeOpening');
         const flash = document.getElementById('pokeFlash');
         const lightLines = document.getElementById('pokeLightLines');
 
-        // Trigger light lines animation
         lightLines.classList.add('active');
-
-        // Trigger flash animation
         flash.classList.add('go');
 
-        // Hide opening during flash
         opening.style.transition = 'opacity 0.3s ease';
         opening.style.opacity = '0';
 
@@ -819,17 +840,16 @@
             opening.style.display = 'none';
             lightLines.classList.remove('active');
 
-            // Trigger hero animation entrance
             document.querySelector('.hero').classList.add('animate-in');
 
-            // Scroll to hero section smoothly
             setTimeout(() => {
                 document.getElementById('hero').scrollIntoView({ behavior: 'smooth' });
             }, 300);
         }, 1200);
     }
+    /* ══ FIN ORQUESTADOR ══ */
     
-    // Music toggle
+    /* ══ COMPONENTE: MUSIC-BTN ══ */
     (function() {
         const audio = document.getElementById('bgMusic');
         const btn = document.getElementById('pokeMusicBtn');
@@ -865,6 +885,7 @@
             else if (!playing) play();
         });
     })();
+    /* ══ FIN COMPONENTE: MUSIC-BTN ══ */
 </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>

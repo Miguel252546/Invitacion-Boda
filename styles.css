@@ -2297,8 +2297,11 @@ body::after {
 .gallery-item img.loaded { opacity: 1; }
 
 /* ═══════════════════════════════════════════════════════
-   POKÉBALL OPENING - LIMPIO
+   POKÉBALL OPENING — COMPONENTES MODULARES
    ═══════════════════════════════════════════════════════ */
+
+/* ══ COMPONENTE: AMBIENTE-FX ══ */
+
 .poke-opening {
     position: fixed;
     inset: 0;
@@ -2336,7 +2339,6 @@ body::after {
     100% { opacity: 0; transform: scale(1.2); }
 }
 
-/* Light Lines Transition - MEJORADAS - COLORES DEL PROYECTO */
 .poke-light-lines {
     position: fixed;
     inset: 0;
@@ -2406,6 +2408,7 @@ body::after {
 
 #pokeSky { z-index: 0; }
 #pokeHearts { z-index: 1; }
+
 .poke-bg-layer {
     position: fixed;
     inset: 0;
@@ -2437,24 +2440,39 @@ body::after {
     100% { opacity: 0; transform: translateY(var(--pbty)) rotate(var(--pbr)) scale(1); }
 }
 
+/* ══ FIN COMPONENTE: AMBIENTE-FX ══ */
+
+/* ══ COMPONENTE: ESCENA-CARD ══ */
+
 .poke-scene {
-    position: relative;
+    position: absolute;
+    inset: 0;
     z-index: 10;
-    width: 100vw;
-    height: auto; /* evitar ocupar toda la altura de la ventana */
+    width: 100%;
+    height: 100%;
     display: grid;
     place-items: center;
-    padding-block: 48px; /* espacio superior e inferior controlado */
+    padding-block: 48px;
+    box-sizing: border-box;
+}
+
+.ring-scene {
+    z-index: 11;
+    display: none;
+}
+
+.ring-scene.show {
+    display: grid;
 }
 
 .poke-card {
-    position: relative; /* permite posicionar elementos internos sin afectar el flujo */
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 20px 36px 8px; /* reducir padding para eliminar espacio residual */
+    padding: 20px 36px 8px;
     background: rgba(26, 39, 68, 0.82);
     backdrop-filter: blur(40px) saturate(1.5);
     -webkit-backdrop-filter: blur(40px) saturate(1.5);
@@ -2504,6 +2522,9 @@ body::after {
     to { opacity: 1; }
 }
 
+/* ══ FIN COMPONENTE: ESCENA-CARD ══ */
+
+/* Layout compartido: escenario */
 .poke-stage {
     position: relative;
     width: 380px;
@@ -2515,6 +2536,7 @@ body::after {
 }
 
 /* ══ COMPONENTE: ANILLO ══ */
+
 .ring-wrap {
     position: absolute;
     top: 50%;
@@ -2551,7 +2573,9 @@ body::after {
     50% { transform: translateY(-12px) rotate(1.5deg); }
 }
 
-/* ══ COMPONENTE: POKÉBALLA ══ */
+/* ══ FIN COMPONENTE: ANILLO ══ */
+
+/* ══ COMPONENTE: POKEBALL ══ */
 
 .pokeball-section {
     position: absolute;
@@ -2581,7 +2605,6 @@ body::after {
     50% { transform: translate(-50%, -50%) scale(1.14); opacity: 1; }
 }
 
-/* Pokéball - 30% más pequeña */
 .pokeball-wrap {
     position: relative;
     width: 380px;
@@ -2680,7 +2703,6 @@ body::after {
     50% { box-shadow: 0 0 0 2px #0a0a0a, 0 0 28px rgba(255, 255, 255, 0.62), 0 0 58px rgba(201, 168, 76, 0.5), 0 0 80px rgba(212, 96, 122, 0.26); }
 }
 
-/* Opening animation */
 .pokeball-wrap.opened .pokeball-body {
     animation: pokeballBallPop 0.25s cubic-bezier(0.34, 1.4, 0.64, 1) forwards;
 }
@@ -2746,7 +2768,34 @@ body::after {
     100% { transform: translate(-50%, -50%) scale(5.2); opacity: 0; }
 }
 
-/* Proposal */
+.pokeball-p-layer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    pointer-events: none;
+}
+
+.pokeball-p {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0;
+    transform-origin: 0 0;
+}
+
+.pokeball-wrap.opened .pokeball-p {
+    animation: pokeballPFly var(--ppt) var(--ppd) cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pokeballPFly {
+    0% { transform: rotate(var(--ppa)) translateX(2px) scale(1.1); opacity: 1; }
+    75% { opacity: 0.8; }
+    100% { transform: rotate(var(--ppa)) translateX(var(--ppdist)) scale(0); opacity: 0; }
+}
+
+/* ══ FIN COMPONENTE: POKEBALL ══ */
+
+/* ══ COMPONENTE: PROPUESTA-CTA ══ */
+
 .poke-proposal {
     display: flex;
     flex-direction: column;
@@ -2824,6 +2873,10 @@ body::after {
     opacity: 1;
 }
 
+/* ══ FIN COMPONENTE: PROPUESTA-CTA ══ */
+
+/* ══ COMPONENTE: HINT ══ */
+
 .poke-hint {
     margin-top: 12px;
     font-size: clamp(14px, 2vw, 18px);
@@ -2841,7 +2894,10 @@ body::after {
     50% { opacity: 0.9; }
 }
 
-/* Music Button */
+/* ══ FIN COMPONENTE: HINT ══ */
+
+/* ══ COMPONENTE: MUSIC-BTN ══ */
+
 .poke-music-btn {
     position: fixed;
     bottom: 28px;
@@ -2913,35 +2969,14 @@ body::after {
     50% { box-shadow: 0 4px 22px rgba(0, 0, 0, 0.55), 0 0 0 4px rgba(201, 168, 76, 0.22), 0 0 46px rgba(201, 168, 76, 0.36); }
 }
 
-/* Particles */
-.pokeball-p-layer {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    pointer-events: none;
-}
+/* ══ FIN COMPONENTE: MUSIC-BTN ══ */
 
-.pokeball-p {
-    position: absolute;
-    border-radius: 50%;
-    opacity: 0;
-    transform-origin: 0 0;
-}
-
-.pokeball-wrap.opened .pokeball-p {
-    animation: pokeballPFly var(--ppt) var(--ppd) cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes pokeballPFly {
-    0% { transform: rotate(var(--ppa)) translateX(2px) scale(1.1); opacity: 1; }
-    75% { opacity: 0.8; }
-    100% { transform: rotate(var(--ppa)) translateX(var(--ppdist)) scale(0); opacity: 0; }
-}
-
+/* Media queries compartidos */
 @media (max-width: 600px) {
     .poke-card { padding: 20px 16px 8px; }
     .poke-stage { width: 300px; height: 300px; display: flex; align-items: center; justify-content: center; }
     .pokeball-halo { width: 350px; height: 350px; }
+    .pokeball-section { width: 300px; height: 300px; }
     .pokeball-wrap { width: 300px; height: 300px; }
     .pokeball-half { width: 300px; height: 150px; }
     .pokeball-h-top .pokeball-fill, .pokeball-h-bot .pokeball-fill { width: 300px; height: 300px; }
