@@ -773,6 +773,10 @@ body::after {
     padding: 60px 20px;
 }
 
+.countdown .section-title {
+    margin-bottom: 8px;
+}
+
 .countdown-particles { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
 
 .countdown-grid {
@@ -2167,7 +2171,7 @@ body::after {
     
     .hero-subtitle { font-size: 0.65rem; letter-spacing: 0.2em; }
     
-    .section-title { margin-bottom: 40px; }
+    .section-title { margin-bottom: 10px; }
     
     .count-box { min-width: 60px; padding: 15px 10px; }
     .count-num { font-size: 2rem; }
