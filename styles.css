@@ -1468,7 +1468,7 @@ body::after {
 
 .detalles .section-title {
     color: #fff;
-    margin-bottom: 20px;
+    margin-bottom: 0;
 }
 
 .detalles-grid {
@@ -3785,6 +3785,10 @@ body::after {
 .precio-tarjeta {
     text-align: center;
     position: relative;
+}
+
+.precio-tarjeta .section-title {
+    margin-bottom: 0;
 }
 
 .precio-tarjeta .regalo-card {
