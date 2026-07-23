@@ -771,6 +771,7 @@ body::after {
 .countdown {
     text-align: center;
     padding: 60px 20px;
+    overflow: hidden; /* evita scroll horizontal en viewports chicos */
 }
 
 .countdown .section-title {
@@ -782,13 +783,14 @@ body::after {
 .countdown-grid {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: stretch; /* iguala alturas reales entre cajas */
     gap: 20px;
     flex-wrap: wrap;
     position: relative;
     z-index: 2;
     max-width: 950px;
     margin: 0 auto;
+    width: 100%;
 }
 
 .count-box {
@@ -799,6 +801,7 @@ body::after {
     border-radius: 16px;
     width: 140px;
     min-width: 140px;
+    max-width: 140px;
     height: 150px;
     display: flex;
     flex-direction: column;
@@ -809,6 +812,7 @@ body::after {
     overflow: hidden;
     transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
     gap: 8px;
+    flex-shrink: 0; /* no se comprime en flex-wrap */
 }
 
 .count-box:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(212, 166, 77, 0.2); }
@@ -831,7 +835,8 @@ body::after {
     text-shadow: 0 0 20px rgba(135, 206, 235, 0.3);
     width: 100%;
     text-align: center;
-    font-variant-numeric: tabular-nums;
+    font-variant-numeric: tabular-nums; /* evita saltos por ancho variable */
+    min-height: 1em; /* mantiene reserva vertical estable */
 }
 
 .count-label {
@@ -850,29 +855,103 @@ body::after {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 150px;
+    align-self: center; /* ignora el stretch del grid */
+    height: 150px; /* misma altura que .count-box */
+    flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+    .countdown-grid {
+        gap: 16px;
+    }
+    .count-box {
+        width: 110px;
+        min-width: 110px;
+        max-width: 110px;
+        height: 130px;
+        padding: 18px 10px;
+    }
+    .count-num {
+        font-size: 2.4rem;
+    }
+    .count-label {
+        font-size: 0.7rem;
+    }
+    .count-sep {
+        font-size: 1.8rem;
+        height: 130px;
+    }
 }
 
 @media (max-width: 600px) {
     .countdown-grid {
-        gap: 12px;
+        gap: 10px;
     }
     .count-box {
-        width: 75px;
-        min-width: 75px;
-        max-width: 75px;
+        width: 72px;
+        min-width: 72px;
+        max-width: 72px;
         height: 95px;
-        padding: 15px 5px;
+        padding: 12px 4px;
     }
     .count-num {
-        font-size: 1.8rem;
+        font-size: 1.7rem;
     }
     .count-label {
-        font-size: 0.6rem;
+        font-size: 0.58rem;
+        letter-spacing: 0.1em;
     }
     .count-sep {
+        font-size: 1.3rem;
+        height: 95px;
+    }
+}
+
+@media (max-width: 430px) {
+    .countdown-grid {
+        gap: 6px;
+    }
+    .count-box {
+        width: 64px;
+        min-width: 64px;
+        max-width: 64px;
+        height: 88px;
+        padding: 10px 3px;
+    }
+    .count-num {
         font-size: 1.5rem;
-        min-height: 95px;
+    }
+    .count-label {
+        font-size: 0.52rem;
+        letter-spacing: 0.06em;
+    }
+    .count-sep {
+        font-size: 1.1rem;
+        height: 88px;
+    }
+}
+
+@media (max-width: 360px) {
+    .countdown-grid {
+        gap: 4px;
+    }
+    .count-box {
+        width: 56px;
+        min-width: 56px;
+        max-width: 56px;
+        height: 82px;
+        padding: 8px 2px;
+    }
+    .count-num {
+        font-size: 1.35rem;
+    }
+    .count-label {
+        font-size: 0.48rem;
+        letter-spacing: 0.04em;
+    }
+    .count-sep {
+        font-size: 1rem;
+        height: 82px;
     }
 }
 
@@ -2337,6 +2416,222 @@ body::after {
 }
 
 /* ══ FIN COMPONENTE: AMBIENTE-FX ══ */
+
+/* ══ COMPONENTE: DECOR-FX — Capas decorativas adicionales del opening ══
+   - Resplandor radial detrás de la Pokéball
+   - Estrellas titilando
+   - Bokeh luminoso
+   - Pétalos/corazones flotando
+   - Partículas orbitando alrededor (sin cubrir la Pokéball)
+   - Rayos de luz diagonales
+   Todo: pointer-events: none, transform/opacity (sin reflow), pausa con tab oculto.
+*/
+.poke-aura {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 60vmin;
+    height: 60vmin;
+    max-width: 720px;
+    max-height: 720px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle,
+        rgba(135, 206, 235, 0.22) 0%,
+        rgba(212, 166, 77, 0.12) 35%,
+        rgba(212, 96, 122, 0.06) 60%,
+        transparent 75%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 2;
+    filter: blur(8px);
+    animation: pokeAuraBreathe 6s ease-in-out infinite;
+    will-change: transform, opacity;
+}
+
+@keyframes pokeAuraBreathe {
+    0%, 100% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.55; }
+    50%      { transform: translate(-50%, -50%) scale(1.08); opacity: 0.95; }
+}
+
+.poke-rays {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.poke-ray {
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: 120%;
+    height: 30%;
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(135, 206, 235, 0.06) 40%,
+        rgba(255, 255, 255, 0.10) 50%,
+        rgba(212, 166, 77, 0.06) 60%,
+        transparent 100%);
+    transform-origin: center center;
+    pointer-events: none;
+    mix-blend-mode: screen;
+    filter: blur(6px);
+    will-change: transform, opacity;
+}
+
+@keyframes pokeRayDrift {
+    0%   { transform: translateX(-12%) rotate(-8deg);  opacity: 0; }
+    20%  { opacity: 0.7; }
+    50%  { transform: translateX(8%)  rotate(8deg);   opacity: 0.9; }
+    80%  { opacity: 0.6; }
+    100% { transform: translateX(-12%) rotate(-8deg);  opacity: 0; }
+}
+
+.poke-stars,
+.poke-bokeh,
+.poke-orbit,
+.poke-hearts-up {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.poke-stars { z-index: 3; }
+.poke-bokeh { z-index: 3; }
+.poke-orbit { z-index: 3; }
+.poke-hearts-up { z-index: 3; }
+
+/* Estrellas titilando */
+.poke-star {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 70%);
+    will-change: opacity, transform;
+    animation: pokeStarTwinkle var(--st-dur, 3s) ease-in-out var(--st-del, 0s) infinite;
+}
+
+.poke-star--gold   { box-shadow: 0 0 6px rgba(212, 166, 77, 0.85),  0 0 14px rgba(212, 166, 77, 0.35); }
+.poke-star--sky    { box-shadow: 0 0 6px rgba(135, 206, 235, 0.9),  0 0 14px rgba(135, 206, 235, 0.4); }
+.poke-star--rose   { box-shadow: 0 0 6px rgba(212, 96, 122, 0.75),  0 0 14px rgba(212, 96, 122, 0.3); }
+.poke-star--cream  { box-shadow: 0 0 6px rgba(255, 240, 200, 0.85), 0 0 14px rgba(255, 240, 200, 0.3); }
+
+@keyframes pokeStarTwinkle {
+    0%, 100% { opacity: 0.15; transform: scale(0.7); }
+    50%      { opacity: 1;    transform: scale(1.4); }
+}
+
+/* Bokeh luminoso (dorado/celeste/rosado/blanco) */
+.poke-bokeh-dot {
+    position: absolute;
+    bottom: -20px;
+    border-radius: 50%;
+    pointer-events: none;
+    background: radial-gradient(circle,
+        hsla(var(--bk-hue, 45), 85%, 85%, 0.95) 0%,
+        hsla(var(--bk-hue, 45), 80%, 60%, 0.45) 35%,
+        transparent 70%);
+    filter: blur(2px);
+    opacity: 0;
+    will-change: transform, opacity;
+    animation: pokeBokehRise var(--bk-dur, 16s) ease-in-out var(--bk-del, 0s) infinite;
+}
+
+@keyframes pokeBokehRise {
+    0%   { transform: translate3d(0, 0, 0) scale(0.4); opacity: 0; }
+    12%  { opacity: var(--bk-op, 0.7); }
+    50%  { transform: translate3d(var(--bk-sway, 20px), -50vh, 0) scale(1.2); }
+    85%  { opacity: var(--bk-op, 0.6); }
+    100% { transform: translate3d(calc(var(--bk-sway, 20px) * -0.8), -110vh, 0) scale(0.3); opacity: 0; }
+}
+
+/* Pétalos / corazones que suben desde la base */
+.poke-rise {
+    position: absolute;
+    bottom: -24px;
+    pointer-events: none;
+    will-change: transform, opacity;
+    opacity: 0;
+    filter: drop-shadow(0 0 8px rgba(255, 220, 200, 0.35));
+    animation: pokeRise var(--pr-dur, 18s) linear var(--pr-del, 0s) infinite;
+}
+
+.poke-rise--petal {
+    width: var(--pr-sz, 10px);
+    height: var(--pr-sz, 10px);
+    border-radius: 65% 35% 60% 40% / 50% 60% 40% 50%;
+    background: var(--pr-color, rgba(255, 220, 200, 0.9));
+}
+
+.poke-rise--heart {
+    width: var(--pr-sz, 12px);
+    height: var(--pr-sz, 12px);
+    background: var(--pr-color, rgba(212, 96, 122, 0.85));
+    transform-origin: 50% 50%;
+    clip-path: path('M12 21s-7-4.5-9.5-9.5C.6 7.7 3.4 4 7 4c2 0 3.6 1 5 2.5C13.4 5 15 4 17 4c3.6 0 6.4 3.7 4.5 7.5C19 16.5 12 21 12 21z');
+}
+
+@keyframes pokeRise {
+    0%   { transform: translate3d(0, 0, 0) rotate(0deg);    opacity: 0; }
+    10%  { opacity: 0.9; }
+    50%  { transform: translate3d(var(--pr-sway, 30px), -50vh, 0) rotate(180deg); }
+    90%  { opacity: 0.8; }
+    100% { transform: translate3d(calc(var(--pr-sway, 30px) * -0.6), -110vh, 0) rotate(360deg); opacity: 0; }
+}
+
+/* Partículas que orbitan alrededor de la Pokéball — sin cubrirla */
+.poke-orbit-dot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: var(--ob-sz, 6px);
+    height: var(--ob-sz, 6px);
+    margin: calc(var(--ob-sz, 6px) / -2) 0 0 calc(var(--ob-sz, 6px) / -2);
+    border-radius: 50%;
+    pointer-events: none;
+    background: radial-gradient(circle, var(--ob-color, rgba(255, 255, 255, 0.95)) 0%, transparent 70%);
+    box-shadow: 0 0 10px var(--ob-glow, rgba(135, 206, 235, 0.6));
+    will-change: transform, opacity;
+    animation: pokeOrbit var(--ob-dur, 18s) linear var(--ob-del, 0s) infinite;
+}
+
+@keyframes pokeOrbit {
+    0%   { transform: rotate(var(--ob-start, 0deg)) translateX(var(--ob-r, 220px)) rotate(calc(var(--ob-start, 0deg) * -1)) scale(1); opacity: 0.9; }
+    50%  { transform: rotate(calc(var(--ob-start, 0deg) + 180deg)) translateX(var(--ob-r, 220px)) rotate(calc((var(--ob-start, 0deg) + 180deg) * -1)) scale(0.85); opacity: 0.6; }
+    100% { transform: rotate(calc(var(--ob-start, 0deg) + 360deg)) translateX(var(--ob-r, 220px)) rotate(calc((var(--ob-start, 0deg) + 360deg) * -1)) scale(1); opacity: 0.9; }
+}
+
+/* Móvil: menos blur, más rápido de pintar, sin rayos pesados */
+@media (max-width: 768px) {
+    .poke-aura    { filter: blur(6px); }
+    .poke-ray     { filter: blur(4px); opacity: 0.6; }
+    .poke-bokeh-dot { filter: blur(1.5px); }
+}
+
+@media (max-width: 480px) {
+    .poke-aura    { width: 80vmin; height: 80vmin; filter: blur(4px); }
+    .poke-rays    { display: none; } /* los rayos consumen mucho en pantallas chicas */
+    .poke-bokeh-dot { filter: blur(1px); }
+}
+
+/* Accesibilidad: si el usuario prefiere menos movimiento, congelamos
+   las nuevas capas (las existentes ya tienen su propia regla global). */
+@media (prefers-reduced-motion: reduce) {
+    .poke-aura,
+    .poke-ray,
+    .poke-star,
+    .poke-bokeh-dot,
+    .poke-rise,
+    .poke-orbit-dot {
+        animation: none !important;
+    }
+    .poke-aura    { opacity: 0.5; }
+    .poke-star    { opacity: 0.6; }
+    .poke-bokeh-dot { opacity: 0.3; }
+    .poke-orbit-dot { opacity: 0.6; }
+}
 
 /* ══ COMPONENTE: ESCENA-CARD ══ */
 

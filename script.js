@@ -193,52 +193,104 @@ document.addEventListener('DOMContentLoaded', () => {
     const CountdownManager = {
         targetDate: new Date('2027-05-15T15:00:00').getTime(),
         els: {},
+        intervalId: null,        // referencia única del setInterval
+        tickingTweens: {},       // tween de GSAP en vuelo por elemento (para cancelarlo)
+        countdownDone: false,    // se bloquea cuando el contador llega a 0
 
         init() {
+            // Evita reinicializar el módulo: previene múltiples setInterval
+            if (this.intervalId !== null) return;
+
             this.els = {
                 days: document.getElementById('days'),
                 hours: document.getElementById('hours'),
                 minutes: document.getElementById('minutes'),
                 seconds: document.getElementById('seconds')
             };
+
             this.update();
-            setInterval(() => this.update(), 1000);
+            this.intervalId = setInterval(() => this.update(), 1000);
+        },
+
+        // Helper: clamp no-negativo + entero seguro
+        _safeInt(value) {
+            if (!Number.isFinite(value)) return 0;
+            return value < 0 ? 0 : Math.floor(value);
         },
 
         update() {
+            if (this.countdownDone) {
+                // Mantiene el contador en 00:00:00:00 sin re-animar ni re-asignar
+                this._render(0, 0, 0, 0, /*forceRender*/ false);
+                return;
+            }
+
             const now = Date.now();
             const distance = this.targetDate - now;
 
-            const days = Math.floor(distance / 86400000);
-            const hours = Math.floor((distance % 86400000) / 3600000);
-            const minutes = Math.floor((distance % 3600000) / 60000);
-            const seconds = Math.floor((distance % 60000) / 1000);
+            const days = this._safeInt(distance / 86400000);
+            const hours = this._safeInt((distance % 86400000) / 3600000);
+            const minutes = this._safeInt((distance % 3600000) / 60000);
+            const seconds = this._safeInt((distance % 60000) / 1000);
 
-            this.animateValue('days', days);
-            this.animateValue('hours', hours);
-            this.animateValue('minutes', minutes);
-            this.animateValue('seconds', seconds);
+            this._render(days, hours, minutes, seconds, /*forceRender*/ false);
+
+            // Si ya llegó la fecha objetivo, marca el fin del conteo
+            if (distance <= 0) {
+                this.countdownDone = true;
+                this._render(0, 0, 0, 0, /*forceRender*/ true);
+            }
         },
 
-        animateValue(id, value) {
+        // Renderiza los 4 valores; los "seconds" se actualizan de forma atómica
+        // (sin mini-pulse) para evitar cualquier flicker visual cada segundo.
+        _render(days, hours, minutes, seconds, forceRender) {
+            this._setValue('days', days, forceRender, /*animate*/ false);
+            this._setValue('hours', hours, forceRender, /*animate*/ true);
+            this._setValue('minutes', minutes, forceRender, /*animate*/ true);
+            this._setValue('seconds', seconds, forceRender, /*animate*/ false);
+        },
+
+        _setValue(id, value, forceRender, animate) {
             const el = this.els[id];
             if (!el) return;
-            const newValue = String(value).padStart(2, '0');
-            if (el.textContent !== newValue) {
-                if (id === 'seconds') {
-                    el.textContent = newValue;
-                    return;
+            // Los días pueden tener más de 2 dígitos; horas/minutos/segundos siempre 2 dígitos
+            const pad = id === 'days' ? Math.max(2, String(value).length) : 2;
+            const newValue = String(value).padStart(pad, '0');
+            if (!forceRender && el.textContent === newValue) return;
+
+            // Cancela cualquier tween GSAP en vuelo sobre este elemento
+            // para evitar que se acumulen animaciones entre ticks
+            if (typeof gsap !== 'undefined') {
+                if (this.tickingTweens[id]) {
+                    this.tickingTweens[id].kill();
+                    this.tickingTweens[id] = null;
                 }
-                gsap.to(el, {
+            }
+
+            if (!animate || typeof gsap === 'undefined') {
+                el.textContent = newValue;
+                return;
+            }
+
+            // Mini-pulse: sube un pelín la escala y vuelve a 1 con el nuevo valor
+            this.tickingTweens[id] = gsap.fromTo(el,
+                { scale: 1 },
+                {
                     scale: 1.05,
-                    duration: 0.05,
+                    duration: 0.08,
                     ease: 'power1.out',
                     onComplete: () => {
                         el.textContent = newValue;
-                        gsap.to(el, { scale: 1, duration: 0.1, ease: 'power1.in' });
+                        this.tickingTweens[id] = gsap.to(el, {
+                            scale: 1,
+                            duration: 0.12,
+                            ease: 'power1.in',
+                            onComplete: () => { this.tickingTweens[id] = null; }
+                        });
                     }
-                });
-            }
+                }
+            );
         }
     };
 
