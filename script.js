@@ -192,20 +192,27 @@ document.addEventListener('DOMContentLoaded', () => {
     // =========================================================================
     const CountdownManager = {
         targetDate: new Date('2027-05-15T15:00:00').getTime(),
+        els: {},
 
         init() {
+            this.els = {
+                days: document.getElementById('days'),
+                hours: document.getElementById('hours'),
+                minutes: document.getElementById('minutes'),
+                seconds: document.getElementById('seconds')
+            };
             this.update();
             setInterval(() => this.update(), 1000);
         },
 
         update() {
-            const now = new Date().getTime();
+            const now = Date.now();
             const distance = this.targetDate - now;
 
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            const days = Math.floor(distance / 86400000);
+            const hours = Math.floor((distance % 86400000) / 3600000);
+            const minutes = Math.floor((distance % 3600000) / 60000);
+            const seconds = Math.floor((distance % 60000) / 1000);
 
             this.animateValue('days', days);
             this.animateValue('hours', hours);
@@ -214,17 +221,14 @@ document.addEventListener('DOMContentLoaded', () => {
         },
 
         animateValue(id, value) {
-            const el = document.getElementById(id);
+            const el = this.els[id];
             if (!el) return;
             const newValue = String(value).padStart(2, '0');
             if (el.textContent !== newValue) {
-                // For seconds, we change the value instantly to avoid the "pulsing" effect
                 if (id === 'seconds') {
                     el.textContent = newValue;
                     return;
                 }
-
-                // Refined animation for days, hours, and minutes
                 gsap.to(el, {
                     scale: 1.05,
                     duration: 0.05,
@@ -251,29 +255,41 @@ document.addEventListener('DOMContentLoaded', () => {
         },
 
         initHeroParallax() {
+            let ticking = false;
             window.addEventListener('scroll', () => {
-                const scrolled = window.pageYOffset;
-                if (DOM.heroImage && scrolled < window.innerHeight) {
-                    DOM.heroImage.style.transform = `scale(${1.1 + scrolled * 0.0003}) translateY(${scrolled * 0.3}px)`;
+                if (!ticking) {
+                    requestAnimationFrame(() => {
+                        const scrolled = window.pageYOffset;
+                        if (DOM.heroImage && scrolled < window.innerHeight) {
+                            DOM.heroImage.style.transform = `scale(${1.1 + scrolled * 0.0003}) translateY(${scrolled * 0.3}px)`;
+                        }
+                        ticking = false;
+                    });
+                    ticking = true;
                 }
             });
         },
 
         initParticles() {
-            const createParticles = (container, count, className, customStyle = '') => {
+            const isMobile = window.innerWidth < 768;
+            const createParticles = (container, count, className, getStyle) => {
                 if (!container) return;
-                for (let i = 0; i < count; i++) {
+                const actualCount = isMobile ? Math.ceil(count * 0.5) : count;
+                const frag = document.createDocumentFragment();
+                for (let i = 0; i < actualCount; i++) {
                     const p = document.createElement('div');
                     p.className = className;
-                    p.style.left = Math.random() * 100 + '%';
-                    if (customStyle) p.style.cssText += customStyle;
-                    container.appendChild(p);
+                    let style = 'left:' + (Math.random() * 100) + '%;';
+                    if (getStyle) style += getStyle(i);
+                    p.style.cssText = style;
+                    frag.appendChild(p);
                 }
+                container.appendChild(frag);
             };
 
             createParticles(DOM.particles.hero, 35, 'hero-particle');
             createParticles(DOM.particles.countdown, 25, 'section-particle');
-            createParticles(DOM.particles.rsvp, 30, 'section-particle', 'bottom: 0; animation: floatUp 8s ease-in-out infinite; animation-delay: ' + (Math.random() * 8) + 's');
+            createParticles(DOM.particles.rsvp, 30, 'section-particle', () => 'bottom:0;animation:floatUp 8s ease-in-out infinite;animation-delay:' + (Math.random() * 8) + 's;');
             createParticles(DOM.particles.footer, 25, 'section-particle');
             createParticles(DOM.particles.detalles, 25, 'section-particle');
         },
@@ -306,10 +322,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 scrollTrigger: { trigger: '.detalles', start: 'top 80%' },
                 opacity: 0, y: 50, duration: 0.8, stagger: 0.2
             });
-            gsap.from('.regalos .regalo-card', {
-                scrollTrigger: { trigger: '.regalos', start: 'top 80%', toggleActions: 'play none none reverse' },
-                opacity: 0, scale: 0.8, y: 50, duration: 1, ease: 'back.out(1.4)'
-            });
+            if (document.querySelector('.regalos')) {
+                gsap.from('.regalos .regalo-card', {
+                    scrollTrigger: { trigger: '.regalos', start: 'top 80%', toggleActions: 'play none none reverse' },
+                    opacity: 0, scale: 0.8, y: 50, duration: 1, ease: 'back.out(1.4)'
+                });
+            }
             gsap.from('.rsvp-icon', {
                 scrollTrigger: { trigger: '.rsvp', start: 'top 75%', toggleActions: 'play none none reverse' },
                 opacity: 0, scale: 0, duration: 0.8, ease: 'back.out(1.7)'
@@ -455,11 +473,13 @@ document.addEventListener('DOMContentLoaded', () => {
             ];
 
             targets.forEach(selector => {
-                document.querySelectorAll(selector).forEach(el => {
+                const els = document.querySelectorAll(selector);
+                for (let i = 0; i < els.length; i++) {
+                    const el = els[i];
                     if (!el.classList.contains('reveal-up') && !el.classList.contains('reveal-scale')) {
                         el.classList.add('reveal-up');
                     }
-                });
+                }
             });
 
             const observer = new IntersectionObserver((entries) => {
