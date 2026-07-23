@@ -1468,7 +1468,7 @@ body::after {
 
 .detalles .section-title {
     color: #fff;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
 }
 
 .detalles-grid {
@@ -1689,14 +1689,14 @@ body::after {
     color: #fff;
     font-family: var(--font-display);
     font-size: 2rem;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
 }
 
 .vestimenta-intro {
     color: rgba(255,255,255,0.7);
     font-size: 1rem;
     max-width: 600px;
-    margin: 0 auto 40px;
+    margin: 0 auto 20px;
     text-align: center;
 }
 
